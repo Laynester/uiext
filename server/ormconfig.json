@@ -1,0 +1,22 @@
+{
+    "type": "mysql",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "username": "root",
+    "password": "lol12345",
+    "database": "lush",
+    "synchronize": false,
+    "logging": false,
+    "entities": [
+        "src/database/entities/**/*.ts"
+    ],
+    "migrations": [
+        "src/migration/**/*.ts"
+    ],
+    "subscribers": [
+        "src/subscriber/**/*.ts"
+    ],
+    "cache": {
+        "alwaysEnabled": false
+    }
+}

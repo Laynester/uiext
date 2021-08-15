@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "declaration": true,
+        "noImplicitAny": false,
+        "noUnusedLocals": false,
+        "removeComments": true,
+        "noLib": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "resolveJsonModule": true,
+        "target": "es6",
+        "sourceMap": false,
+        "allowJs": false,
+        "baseUrl": "./src",
+        "outDir": "./dist"
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}
