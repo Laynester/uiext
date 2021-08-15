@@ -5,8 +5,10 @@ export default {
     data() {
         return {
             songs: null,
+            changed: false,
             selected: {
-                length: "",
+                name: "The Habhop",
+                length: "817",
             },
         };
     },
@@ -33,21 +35,53 @@ export default {
                     class="le-trax-style-2 le-trax-ts-1 le-trax-songs-item"
                     v-for="(r, i) in songs"
                     :key="i"
-                    @click="selected = r"
+                    @click="
+                        selected = r;
+                        changed = true;
+                    "
                 >
                     {{ r.name }}
                 </div>
             </div>
-            <div
-                class="le-trax-style-2 mt-1 text-center le-trax-ts-1"
-                @click="create()"
-            >
-                Create a New Song
-            </div>
         </div>
         <div class="w-100 me-1" v-else>You havent created any songs yet!</div>
-        <div class="le-trax-style-3 w-100 align-self-center">
-            {{ selected.length | secondsDuration }}
+        <div class="w-100">
+            <div class="le-trax-style-3 text-center p-2">
+                <b class="d-block">{{ selected.name }}</b>
+                {{ selected.length | secondsDuration }}
+            </div>
+            <div class="mt-1">
+                <div
+                    class="
+                        le-trax-style-2
+                        coloured
+                        bg-dark
+                        text-white text-center
+                        le-trax-ts-3
+                        px-2
+                        fw-bold
+                        mb-1
+                    "
+                    @click="create()"
+                >
+                    Create a New Song
+                </div>
+                <div
+                    class="
+                        le-trax-style-2
+                        coloured
+                        bg-success
+                        text-white text-center
+                        le-trax-ts-3
+                        px-2
+                        fw-bold
+                    "
+                    :class="{ disabled: !changed }"
+                    @click="burn()"
+                >
+                    Burn song
+                </div>
+            </div>
         </div>
     </div>
 </template>

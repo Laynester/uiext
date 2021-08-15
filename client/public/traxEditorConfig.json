@@ -6,8 +6,14 @@
         "y": 10
     },
     "window": {
-        "width": 623,
-        "height": 293,
+        "editor": {
+            "width": 623,
+            "height": 293
+        },
+        "list": {
+            "width": 433,
+            "height": 220
+        },
         "x": 90,
         "y": 100
     }

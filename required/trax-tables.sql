@@ -1,22 +1,5 @@
--- -------------------------------------------------------------
--- TablePlus 3.10.0(348)
---
--- https://tableplus.com/
---
--- Database: lush
--- Generation Time: 2021-08-15 14:13:25.1550
--- -------------------------------------------------------------
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
+ALTER TABLE soundtracks ADD owner int(11);
+ALTER TABLE soundtracks ADD hidden int(11);
 
 DROP TABLE IF EXISTS `le_trax_sets`;
 CREATE TABLE `le_trax_sets` (

@@ -3,6 +3,11 @@ $background-colour: #e2e2e2;
 $box-shadow-colour-1:$white;
 $box-shadow-colour-2:#d9d9d9;
 
+.disabled {
+    opacity: 0.7;
+    filter: saturate(0.5);
+}
+
 .le-trax-style-1 {
     border:1px solid $border-colour;
     background:$background-colour;

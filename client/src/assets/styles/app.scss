@@ -1,4 +1,5 @@
 $font-size-base: 0.7;
+$green: #3ba800;
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
@@ -26,6 +27,10 @@ $font-size-base: 0.7;
     .le-trax-ts-2 {
         -webkit-font-smoothing: antialiased;
         -webkit-text-stroke: 1px rgba($black,.4);
+    }
+
+    .le-trax-ts-3 {
+        text-shadow: -1px -1px rgba($black,.2);
     }
 
     *{
