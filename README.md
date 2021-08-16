@@ -1,4 +1,6 @@
 # Trax Editor
+### Before installation:
+Copy the RCON plugin to your emulator plugins folder, and run the **required** database sql in the **required** folder
 
 ### Installation
 #### 1. Client
@@ -45,7 +47,6 @@ The SSO will be passed similarly to nitro
 ```
 npm start
 ```
-
 ##### You will need to create a reverse proxy in IIS or NGINX etc
 
 ###### IIS
