@@ -5,6 +5,7 @@ import { TraxCollectionEntity } from "../../database/entities/TraxCollectionEnti
 import { UserEntity } from "../../database/entities/UserEntity";
 import * as config from '../../../config.json';
 import { RCON } from "../../utils/RCON";
+import { TraxServer } from "../../main";
 
 export class TraxController
 {
@@ -22,11 +23,11 @@ export class TraxController
 
     static userSongs = async (req: Request, res: Response) =>
     {
-        if (!req.headers['sso']) res.json({ error: "invalid" }).status(400)
+        if (!req.headers['sso']) res.status(400).json({ error: "invalid" })
 
         let user = await UserEntity.getRepository().createQueryBuilder("user").where({ auth_ticket: req.headers['sso'] }).getOne();
 
-        if (!user) res.json({ error: "invalid" }).status(400)
+        if (!user) res.status(400).json({ error: "invalid" })
 
         let songs = await SoundTrackEntity
             .getRepository()
@@ -39,15 +40,15 @@ export class TraxController
 
     static saveSong = async (req: Request, res: Response) =>
     {
-        if (!req.headers['sso']) return res.json({ error: "invalid" }).status(400)
+        if (!req.headers['sso']) return res.status(400).json({ error: "invalid" })
 
         let user = await UserEntity.getRepository().createQueryBuilder("user").where({ auth_ticket: req.headers['sso'] }).getOne();
 
-        if (!user) return res.json({ error: "invalid" }).status(400);
+        if (!user) return res.status(400).json({ error: "invalid" });
 
         let { name, track, length } = req.body;
 
-        if (!TraxController.validateSongString(track)) return res.json({ error: "invalid" }).status(400);
+        if (!TraxController.validateSongString(track)) return res.status(400).json({ error: "invalid" });
 
         let soundtrack = await SoundTrackEntity.getRepository().create({
             code: `${user.username}-${Date.now()}`,
@@ -72,26 +73,64 @@ export class TraxController
 
     static burnSong = async (req: Request, res: Response) =>
     {
-        if (!req.headers['sso']) return res.json({ error: "invalid" })
+        if (!req.headers['sso']) return res.status(400).json({ error: "invalid" })
 
         let user = await UserEntity.getRepository().createQueryBuilder("user").where({ auth_ticket: req.headers['sso'] }).getOne();
 
-        if (!user) return res.json({ error: "invalid" }).status(400)
+        let currencies = await TraxServer.getInstance().database.query(`SELECT * FROM users_currency WHERE user_id = '${user.id}'`);
 
-        if (!user.online) return res.json({ error: "" }).status(400)
+        if (!user) return res.status(400).json({ error: "invalid" })
+
+        if (user.online == 0) return res.status(400).json({ error: "not_online" })
 
         let { songId } = req.body;
 
         let song = await SoundTrackEntity.getRepository().createQueryBuilder("song").where({ id: songId }).innerJoin("song.item", "item").select(['song', 'item']).getOne();
 
-        if (!song) return res.json({ error: "invalid" }).status(400)
+        if (!song) return res.status(400).json({ error: "invalid" })
 
-        if (song.owner !== user.id) return res.json({ error: "invalid" }).status(400);
+        if (song.owner !== user.id) return res.status(400).json({ error: "invalid" });
 
-        if (!song.item) return res.json({ error: "invalid" }).status(400);
+        if (!song.item) return res.status(400).json({ error: "invalid" });
 
-        RCON.giveItem(user.id, song.item.id)
-        res.json({ message: 'success' }).status(400);
+        let safe = false;
+
+        config.cost.split(",").forEach((cost) =>
+        {
+            let currency = cost.split(":");
+
+            if (currency.length < 2) return;
+
+            switch (currency[0])
+            {
+                case "-1":
+                    if (user.credits >= parseInt(currency[1]))
+                    {
+                        safe = true;
+                        RCON.giveCredits(user.id, parseInt(currency[1]));
+                    } else
+                    {
+                        safe = false;
+                    }
+                    break;
+                default:
+                    let temp = currencies.filter((e) => e.type === parseInt(currency[0]))[0];
+                    if (temp.amount >= parseInt(currency[1]))
+                    {
+                        safe = true;
+                        RCON.givePoints(user.id, parseInt(currency[0]), -parseInt(currency[1]))
+                    } else
+                    {
+                        safe = false
+                    }
+
+            }
+        });
+
+        if (!safe) return res.status(400).json({ error: "not_enough" });
+
+        RCON.giveItem(user.id, song.item.id);
+        res.json({ message: 'success' });
     }
 
     static validateSongString(string: string): boolean

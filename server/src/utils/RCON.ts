@@ -21,14 +21,37 @@ export class RCON
         })
     };
 
-    static giveItem(user: number, item: number)
+    static giveItem(user_id: number, item_id: number)
     {
         RCON.sendMessage({
             key: 'giveitem',
             data: {
-                user_id: user,
-                item_id: item
+                user_id,
+                item_id,
             }
         });
+    }
+
+    static giveCredits(user_id: number, credits: number)
+    {
+        RCON.sendMessage({
+            key: 'givecredits',
+            data: {
+                user_id,
+                credits
+            }
+        })
+    }
+
+    static givePoints(user_id: number, type: number, points: number)
+    {
+        RCON.sendMessage({
+            key: 'givepoints',
+            data: {
+                user_id,
+                points,
+                type
+            }
+        })
     }
 }

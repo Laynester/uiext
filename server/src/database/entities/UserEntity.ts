@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from "typeorm";
 
 @Entity('users')
 export class UserEntity extends BaseEntity
@@ -14,4 +14,7 @@ export class UserEntity extends BaseEntity
 
     @Column()
     online: number;
+
+    @Column()
+    credits: number;
 }
