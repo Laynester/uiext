@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "ts-node-dev --respawn --transpile-only ./src/main.ts"
+    "start": "ts-node-dev --respawn --transpile-only ./src/main.ts"
   },
   "author": "Laynester",
   "license": "ISC",
