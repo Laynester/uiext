@@ -1,4 +1,6 @@
 # Trax Editor
+### Before installation:
+Copy the RCON plugin to your emulator plugins folder, and run the **required** database sql in the **required** folder
 
 ### Installation
 #### 1. Client
@@ -41,6 +43,10 @@ The SSO will be passed similarly to nitro
 ### Set the API in traxEditorConfig.json to the subdomain you create in step 2
 
 #### 2. Server
+**Open "server" in terminal/cmd prompt etc**
+```
+npm start
+```
 ##### You will need to create a reverse proxy in IIS or NGINX etc
 
 ###### IIS
