@@ -12,4 +12,6 @@ router.get('/personalsongs', TraxController.userSongs);
 
 router.post('/save', TraxController.saveSong);
 
+router.post('/burn', TraxController.burnSong);
+
 export default router;

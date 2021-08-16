@@ -4,7 +4,7 @@ import { SoundTrackEntity } from "../../database/entities/SoundTrackEntity";
 import { TraxCollectionEntity } from "../../database/entities/TraxCollectionEntity";
 import { UserEntity } from "../../database/entities/UserEntity";
 import * as config from '../../../config.json';
-import * as net from 'net';
+import { RCON } from "../../utils/RCON";
 
 export class TraxController
 {
@@ -22,11 +22,11 @@ export class TraxController
 
     static userSongs = async (req: Request, res: Response) =>
     {
-        if (!req.headers['sso']) res.json({ error: "invalid" })
+        if (!req.headers['sso']) res.json({ error: "invalid" }).status(400)
 
         let user = await UserEntity.getRepository().createQueryBuilder("user").where({ auth_ticket: req.headers['sso'] }).getOne();
 
-        if (!user) res.json({ error: "invalid" })
+        if (!user) res.json({ error: "invalid" }).status(400)
 
         let songs = await SoundTrackEntity
             .getRepository()
@@ -39,15 +39,15 @@ export class TraxController
 
     static saveSong = async (req: Request, res: Response) =>
     {
-        if (!req.headers['sso']) return res.json({ error: "invalid" })
+        if (!req.headers['sso']) return res.json({ error: "invalid" }).status(400)
 
         let user = await UserEntity.getRepository().createQueryBuilder("user").where({ auth_ticket: req.headers['sso'] }).getOne();
 
-        if (!user) return res.json({ error: "invalid" });
+        if (!user) return res.json({ error: "invalid" }).status(400);
 
         let { name, track, length } = req.body;
 
-        if (!TraxController.validateSongString(track)) return res.json({ error: "invalid" });
+        if (!TraxController.validateSongString(track)) return res.json({ error: "invalid" }).status(400);
 
         let soundtrack = await SoundTrackEntity.getRepository().create({
             code: `${user.username}-${Date.now()}`,
@@ -66,6 +66,32 @@ export class TraxController
                 extradata: soundtrack.code
             }
         ).execute();
+
+        res.json({ message: "success" });
+    }
+
+    static burnSong = async (req: Request, res: Response) =>
+    {
+        if (!req.headers['sso']) return res.json({ error: "invalid" })
+
+        let user = await UserEntity.getRepository().createQueryBuilder("user").where({ auth_ticket: req.headers['sso'] }).getOne();
+
+        if (!user) return res.json({ error: "invalid" }).status(400)
+
+        if (!user.online) return res.json({ error: "" }).status(400)
+
+        let { songId } = req.body;
+
+        let song = await SoundTrackEntity.getRepository().createQueryBuilder("song").where({ id: songId }).innerJoin("song.item", "item").select(['song', 'item']).getOne();
+
+        if (!song) return res.json({ error: "invalid" }).status(400)
+
+        if (song.owner !== user.id) return res.json({ error: "invalid" }).status(400);
+
+        if (!song.item) return res.json({ error: "invalid" }).status(400);
+
+        RCON.giveItem(user.id, song.item.id)
+        res.json({ message: 'success' }).status(400);
     }
 
     static validateSongString(string: string): boolean

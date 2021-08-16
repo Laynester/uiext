@@ -2,6 +2,7 @@
     "port": 9999,
     "item_id": 2607,
     "page_id": 1,
+    "cost": "-1:100,5:90",
     "rcon_ip": "127.0.0.1",
     "rcon_port": 3001
 }

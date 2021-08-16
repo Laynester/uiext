@@ -1,5 +1,4 @@
 import { Howl } from "howler";
-import methods from './functions';
 
 const functions = {
     playSong(songString, length, preview) {
@@ -118,11 +117,12 @@ const functions = {
         }
     },
     load: async function () {
-        await methods.getAPI('collections').then((res) => {
-            this.collection = res.data;
-            this.visibleCollection = this.collection.slice(0, 6);
-            this.collectionPages = Math.ceil(this.collection.length / 6);
-        })
+        await this.$api
+            .get(`${this.$store.state.config.api}collections`).then((res) => {
+                this.collection = res.data;
+                this.visibleCollection = this.collection.slice(0, 6);
+                this.collectionPages = Math.ceil(this.collection.length / 6);
+            })
     },
     paginate(type) {
         switch (type) {
@@ -308,17 +308,18 @@ const functions = {
             track: this.getSongString().string,
             length: this.getSongString().len,
         };
-        await methods.postAPI('save', form).then(() => {
-            //this.$parent.toast(e.data.message, "success", "Success");
-            this.$parent.toggleEditor
-        }).catch((e) => {
-            if (!e.response) return;
-            let errors = Object.values(e.response.data);
-            errors = errors.flat();
-            errors.forEach(() => {
-                //this.$parent.toast(e, "danger", "Error");
+        await this.$api
+            .post(`${this.$store.state.config.api}save`, form).then(() => {
+                //this.$parent.toast(e.data.message, "success", "Success");
+                this.$parent.toggleEditor
+            }).catch((e) => {
+                if (!e.response) return;
+                let errors = Object.values(e.response.data);
+                errors = errors.flat();
+                errors.forEach(() => {
+                    //this.$parent.toast(e, "danger", "Error");
+                });
             });
-        });
     },
     startDragHandle(e) {
         if (this.playing) return;

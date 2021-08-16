@@ -1,6 +1,4 @@
 <script>
-import methods from "../utils/functions";
-
 export default {
     data() {
         return {
@@ -13,15 +11,21 @@ export default {
         };
     },
     mounted: async function () {
-        await methods.getAPI("personalsongs").then((res) => {
-            this.songs = res.data;
-        });
+        await this.$api
+            .get(`${this.$store.state.config.api}personalsongs`)
+            .then((res) => {
+                this.songs = res.data;
+            });
     },
     methods: {
         create() {
             this.$parent.toggleEditor();
         },
-        burn: async function () {},
+        burn: async function () {
+            await this.$api.post(`${this.$store.state.config.api}burn`, {
+                songId: this.selected.id,
+            });
+        },
         delete: async function () {},
     },
 };

@@ -11,4 +11,7 @@ export class UserEntity extends BaseEntity
 
     @Column()
     auth_ticket: string;
+
+    @Column()
+    online: number;
 }

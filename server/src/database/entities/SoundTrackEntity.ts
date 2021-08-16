@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, JoinColumn } from "typeorm";
-import { TraxSetsEntity } from "./TraxSetsEntity";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, JoinColumn, ManyToOne, OneToOne } from "typeorm";
+import { CatalogItemEntity } from "./CatalogItemEntity";
 
 @Entity('soundtracks')
 export class SoundTrackEntity extends BaseEntity
@@ -27,4 +27,8 @@ export class SoundTrackEntity extends BaseEntity
 
     @Column()
     hidden: number;
+
+    @OneToOne(type => CatalogItemEntity)
+    @JoinColumn({ name: "id", referencedColumnName: "song_id" })
+    item: CatalogItemEntity;
 }

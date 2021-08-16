@@ -26,6 +26,9 @@ export default {
                         : this.$store.state.config.window.list.width;
             }
         },
+        toggleEditor() {
+            this.editor = !this.editor;
+        },
     },
 };
 </script>
@@ -45,7 +48,7 @@ export default {
             <div class="fw-bold align-self-center">Trax</div>
             <div
                 class="le-trax-style-2 le-trax-close"
-                @click="this.$parent.toggleEditor()"
+                @click="this.$parent.toggleTrax()"
             />
         </div>
         <div :style="`height:${getConfig('height')}px;`">
