@@ -8,6 +8,8 @@ export class TraxController
     public static open = async (req: Request, res: Response) =>
     {
         let userId: number = parseInt(req.params.id);
+
+        if (!userId) return res.json({});
         
         let user: UserEntity = await UserEntity.createQueryBuilder().where({ id: userId }).getOne();
 
@@ -15,6 +17,6 @@ export class TraxController
 
         UIExt.getInstance().sendToUser(user.id, new TraxWindowComposer(1));
 
-        res.json({});
+        return res.json({});
     }
 }

@@ -20,6 +20,8 @@ copy **js** & **css** folders to your nitro **or** cms directory
 
 paste the following into your cms client.php or nitro's index.html
 
+> paste `<div id="uiext-app"></div>` BELOW `<approot>` if you're pasting this into nitro's index.html
+
 ```
 <link href="/uiext/app.css" rel="stylesheet">
 <div id="uiext-app"></div>
@@ -33,6 +35,8 @@ paste the following into your cms client.php or nitro's index.html
 <script type="text/javascript" src="/uiext/chunk-vendors.js"></script>
 <script type="text/javascript" src="/uiext/app.js"></script>
 ```
+
+> if you are not using nitro paste this too `<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">`
 
 configure "sounds","ws" & "sso"
 If you pasted into nitro's index.html, leave the SSO as is.
