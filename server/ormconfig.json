@@ -4,7 +4,7 @@
     "port": 3306,
     "username": "root",
     "password": "lol12345",
-    "database": "lush",
+    "database": "arcturus",
     "synchronize": false,
     "logging": false,
     "entities": [
