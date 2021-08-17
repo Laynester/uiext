@@ -3,6 +3,7 @@ import { UserEntity } from '../../../database/entities/UserEntity';
 import { UIExt } from '../../../main';
 import { RCON } from '../../../utils/RCON';
 import { WsUser } from '../../../utils/WsUser';
+import { AlertComposer } from '../../outgoing/trax/AlertComposer';
 import { IncomingMessage } from '../IncomingMessage';
 
 export class BurnSongEvent implements IncomingMessage
@@ -23,17 +24,20 @@ export class BurnSongEvent implements IncomingMessage
 
         if (!song.item) return;
 
-        let safe = false;
+        let safe: boolean = false;
+
+        let currencyString: string = "";
 
         UIExt.getInstance().config.trax.cost.split(",").forEach((cost:string) =>
         {
-            let currency = cost.split(":");
+            let currency: string[] = cost.split(":");
 
             if (currency.length < 2) return;
 
             switch (currency[0])
             {
                 case "-1":
+                    currencyString += `${currency[1]} Credits `
                     if (ws.account.credits >= parseInt(currency[1]))
                     {
                         safe = true;
@@ -45,6 +49,15 @@ export class BurnSongEvent implements IncomingMessage
                     break;
                 default:
                     let temp = currencies.filter((e) => e.type === parseInt(currency[0]))[0];
+                    switch (currency[0])
+                    {
+                        case "5":
+                            currencyString += `${currency[1]} Diamonds `;
+                            break;
+                        case "0":
+                            currencyString += `${currency[1]} Duckets `;
+                            break;
+                    }
                     if (temp.amount >= parseInt(currency[1]))
                     {
                         safe = true;
@@ -53,11 +66,10 @@ export class BurnSongEvent implements IncomingMessage
                     {
                         safe = false
                     }
-
             }
         });
 
-        if (!safe) return;
+        if (!safe) return ws.sendMessage(new AlertComposer(1,"You don't have enough for this, it cost: " + currencyString));
 
         RCON.giveItem(ws.account.id, song.item.id)
     }

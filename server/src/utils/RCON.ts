@@ -54,4 +54,15 @@ export class RCON
             }
         })
     }
+
+    static alertUser(user_id: number, message: string)
+    {
+        RCON.sendMessage({
+            key: 'alertUser',
+            data: {
+                user_id,
+                message
+            }
+        })
+    }
 }

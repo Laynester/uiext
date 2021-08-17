@@ -1,17 +1,13 @@
 <script>
+import Alert from "./Alert.vue";
 import Editor from "./editor/Editor.vue";
 import ListView from "./ListView.vue";
 
 export default {
-    components: { ListView, Editor },
-    data() {
-        return {
-            editor: false,
-        };
-    },
+    components: { ListView, Editor, Alert },
     methods: {
         toggleEditor() {
-            this.editor = !this.editor;
+            this.$store.state.trax.editor = !this.$store.state.trax.editor;
         },
         toggle() {
             this.$store.state.window.trax = false;
@@ -26,9 +22,10 @@ export default {
         title="Trax"
         theme="0"
         @clicked="toggle()"
-        :class="editor ? `trax-window-editor` : `trax-window-list`"
+        :class="this.$store.state.trax.editor ? `trax-window-editor` : `trax-window-list`"
     >
-        <ListView v-if="!editor" @toggleEditor="toggleEditor()" />
+        <ListView v-if="!this.$store.state.trax.editor" @toggleEditor="toggleEditor()" />
         <Editor v-else @toggleEditor="toggleEditor()" />
+        <Alert />
     </UIExtCard>
 </template>

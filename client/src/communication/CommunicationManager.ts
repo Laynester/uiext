@@ -1,6 +1,7 @@
 import { IncomingMessage } from "./incoming/IncomingMessage";
 import { RequestedCollectionsEvent } from "./incoming/trax/RequestedCollectionsEvent";
 import { RequestedSongsEvent } from "./incoming/trax/RequestedSongsEvent";
+import { TraxAlertEvent } from "./incoming/trax/TraxAlertEvent";
 import { TraxWindowEvent } from "./incoming/trax/TraxWindowEvent";
 import { ConnectionComposer } from "./outgoing/general/ConnectionComposer";
 import { OutgoingMessage } from "./outgoing/OutgoingMessage";
@@ -48,7 +49,8 @@ export class CommunicationManager
     {
         this._events.set('trax_window', new TraxWindowEvent());
         this._events.set('trax_requestedSongs', new RequestedSongsEvent());
-        this._events.set('trax_requestedCollections', new RequestedCollectionsEvent())
+        this._events.set('trax_requestedCollections', new RequestedCollectionsEvent());
+        this._events.set('trax_alert', new TraxAlertEvent())
     }
 
     private onMessage(message: string | MessageEvent): void

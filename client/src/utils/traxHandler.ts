@@ -294,7 +294,6 @@ const functions = {
         if (!this.getSongString().len) return
         if (!this.name) return;
         CommunicationManager.getInstance().sendMessage(new CreateSongComposer(this.name, this.getSongString().string, this.getSongString().len));
-        this.$emit('toggleEditor')
     },
     startDragHandle(e) {
         if (this.playing) return;

@@ -16,7 +16,7 @@ module.exports = {
         "space-before-function-paren": 0,
         "vue/html-self-closing": 0,
         "no-console": 0,
-        "indent": ["error", 4],
+        "indent": ["error", 4,{"SwitchCase": 1}],
         "eol-last": 0,
         "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }],
         "brace-style": "off",

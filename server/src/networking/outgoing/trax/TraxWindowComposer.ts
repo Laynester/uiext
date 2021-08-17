@@ -5,10 +5,11 @@ export class TraxWindowComposer implements OutgoingMessage
     public header = "trax_window";
     data: any;
 
-    constructor(status:number)
+    constructor(status: boolean, editor: boolean)
     {
         this.data = {
-            status
+            status,
+            editor
         }
     }
 }

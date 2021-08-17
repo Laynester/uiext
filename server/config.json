@@ -8,5 +8,9 @@
         "item_id": 2607,
         "page_id": 1,
         "cost": "-1:100,5:20"
+    },
+    "features":{
+        "disabledAlert": true,
+        "trax": false
     }
 }

@@ -6,6 +6,8 @@ export default createStore({
             trax: false
         },
         trax: {
+            editor: false,
+            alert: null,
             songs: null,
             collection: null,
             visibleCollection: [],

@@ -95,9 +95,22 @@ export class UIExt
         this._wsuCollection = this._wsuCollection.filter(item => item !== ws);
     }
 
+    public findUserById(user:number): WsUser
+    {
+        let wsu = null;
+        
+        this._wsuCollection.forEach(e =>
+        {
+            if (!e.account) return;
+            if (e.account.id == user) return wsu = e;
+        })
+
+        return wsu;
+    }
+
     public sendToUser(user: number, message: OutgoingMessage): void
     {
-        let wsu: WsUser = this._wsuCollection.filter(item => item.account.id === user)[0];
+        let wsu: WsUser = this.findUserById(user);
 
         if (!wsu) return;
 

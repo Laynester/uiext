@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { UserEntity } from "../../../database/entities/UserEntity";
 import { UIExt } from "../../../main";
 import { TraxWindowComposer } from "../../../networking/outgoing/trax/TraxWindowComposer";
+import { RCON } from "../../../utils/RCON";
 
 export class TraxController
 {
@@ -15,7 +16,12 @@ export class TraxController
 
         if (!user) return res.json({});
 
-        UIExt.getInstance().sendToUser(user.id, new TraxWindowComposer(1));
+        if (UIExt.getInstance().config.features.trax)
+        {
+            UIExt.getInstance().sendToUser(user.id, new TraxWindowComposer(true,false));
+        } else {
+            if(UIExt.getInstance().config.features.disabledAlert) RCON.alertUser(user.id,"Trax is disabled") 
+        }
 
         return res.json({});
     }
