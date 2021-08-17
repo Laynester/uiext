@@ -15,10 +15,10 @@ copy **js** & **css** folders to your nitro **or** cms directory
 paste the following into your cms client.php or nitro's index.html
 ```
 <link href="/css/app.css" rel="stylesheet">
-<div id="le-trax"></div>
+<div id="uiext-app"></div>
 <script>
   var UIExtConfig = {
-    ws:"wss://uiext.mydomain.com:2095",
+    ws:"wss://uiext.mydomain.com:2083",
     sounds: "http://127.0.0.1/ms-swf/dcr/hof_furni/mp3/",
     sso: (new URLSearchParams(window.location.search).get('sso') || null)
   }
