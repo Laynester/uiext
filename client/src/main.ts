@@ -27,4 +27,4 @@ app.config.globalProperties.$filters = {
 
 app.config.globalProperties.$store = Store
 
-app.mount('#le-trax');
+app.mount('#uiext-app');

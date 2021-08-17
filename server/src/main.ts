@@ -10,7 +10,6 @@ import Logger from './utils/Logger';
 import * as config from '../config.json';
 import { WsUser } from './utils/WsUser';
 import HttpRouter from './api/HttpRouter';
-import { UserEntity } from './database/entities/UserEntity';
 import { OutgoingMessage } from './networking/outgoing/OutgoingMessage';
 
 export class UIExt
@@ -99,7 +98,6 @@ export class UIExt
     public sendToUser(user: number, message: OutgoingMessage): void
     {
         let wsu: WsUser = this._wsuCollection.filter(item => item.account.id === user)[0];
-        console
 
         if (!wsu) return;
 
