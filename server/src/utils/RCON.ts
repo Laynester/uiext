@@ -1,5 +1,5 @@
-import * as config from '../../config.json';
 import * as net from 'net';
+import { UIExt } from '../main';
 
 export class RCON
 {
@@ -7,7 +7,7 @@ export class RCON
     {
         let client: net.Socket = new net.Socket();
 
-        client.connect(config.rcon_port, config.rcon_ip, () =>
+        client.connect(UIExt.getInstance().config.rcon_port, UIExt.getInstance().config.rcon_ip, () =>
         {
             client.write(JSON.stringify(message));
         });

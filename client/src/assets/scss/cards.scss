@@ -1,0 +1,92 @@
+.uiExt-card {
+    font-size: $font-size-base + em;
+
+    &[theme="0"] {
+        border: 1px solid $il-border-colour;
+        background: $il-background-colour;
+        border-radius: 4px;
+        padding: 4px;
+        box-shadow: inset 0 2px $il-box-shadow-colour-1,
+            inset 0 -2px $il-box-shadow-colour-2, 0 0 4px 3px rgba($black, 0.2);
+
+        .uiExt-cardHeader {
+            text-shadow: 0 1px $white;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid $il-border-colour;
+            box-shadow: 0 1px #fff;
+            margin-bottom: 5px;
+            padding-bottom: 5px;
+            span {
+                align-self: center;
+                display: block;
+            }
+        }
+
+        .uiExt-cardClose {
+            align-self: center;
+            border: 1px solid $il-border-colour;
+            border-radius: 6px;
+            background: $il-background-colour;
+            box-shadow: inset 0 2px $il-box-shadow-colour-1,
+                inset 0 -2px $il-box-shadow-colour-2;
+            width: 19px;
+            height: 20px;
+            position: relative;
+            cursor: pointer;
+
+            &::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                background-image: url("../images/close.png");
+                background-repeat: no-repeat;
+                height: 12px;
+                width: 11px;
+            }
+
+            &:hover {
+                &::after {
+                    background-position: -11px 0;
+                }
+            }
+
+            &:active {
+                &::after {
+                    background-position: -22px 0;
+                }
+            }
+        }
+
+        .uiExtSplitter-ver {
+            height: 100%;
+            border-right: 1px solid $il-border-colour;
+            box-shadow: 1px 0 $white;
+            margin: 0 3px;
+        }
+        * {
+            &::-webkit-scrollbar {
+                width: 9px;
+                height: 9px;
+            }
+            &::-webkit-scrollbar-track {
+                background: $white;
+                border: 1px solid #c9c5d2;
+                border-radius: 4px;
+                box-sizing: content-box;
+            }
+            &::-webkit-scrollbar-thumb {
+                background: #453b3b;
+                border: 1px solid #c9c5d2;
+                box-shadow: inset 0 0 0 1px $white;
+                margin: 1px;
+                border-radius: 4px;
+            }
+        }
+    }
+}

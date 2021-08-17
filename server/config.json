@@ -1,8 +1,12 @@
 {
-    "port": 9999,
-    "item_id": 2607,
-    "page_id": 1,
-    "cost": "-1:100,5:20",
+    "apiPort":9999,
+    "wsPort":2095,
+    "tokenKey":"changeThisToAPassword",
     "rcon_ip": "127.0.0.1",
-    "rcon_port": 3001
+    "rcon_port": 3001,
+    "trax": {
+        "item_id": 2607,
+        "page_id": 1,
+        "cost": "-1:100,5:20"
+    }
 }

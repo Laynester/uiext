@@ -1,17 +1,60 @@
+import chalk = require("chalk");
 
 export default class Logger
 {
-
-    private static DebugMode = true;
-
-    public static Log(msg: string)
+    public static logo()
     {
+        let logo = `
+.##.....##.####....########.##.....##.########
+.##.....##..##.....##........##...##.....##...
+.##.....##..##.....##.........##.##......##...
+.##.....##..##.....######......###.......##...
+.##.....##..##.....##.........##.##......##...
+.##.....##..##.....##........##...##.....##...
+..#######..####....########.##.....##....##...\n`;
 
-        if (!Logger.DebugMode)
-            return;
+        console.log(chalk.redBright(logo));
+    }
 
+    public static Main(msg: string)
+    {
+        Logger.Log('UIExt', msg);
+    }
+
+    public static User(msg: string)
+    {
+        Logger.Log('User', msg);
+    }
+
+    public static Error(msg: string)
+    {
+        Logger.Log('Error', msg);
+    }
+
+    public static Log(type: string,msg: string)
+    {
         let date = new Date();
-        console.log("[" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + "] " + msg);
+
+        let dateStr = chalk.yellow(`[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+        console.log(`${dateStr} - ${Logger.colourify(type)} ${msg}`);
+    }
+
+    public static colourify(type)
+    {
+        let ret: string =  `${type}]`
+        switch (type)
+        {
+            case "Error":
+                return chalk.redBright(ret);
+            case "UIExt":
+                return chalk.grey(ret);
+            case "User":
+                return chalk.cyan(ret);
+            case "trax":
+                return chalk.blueBright(ret)
+            default:
+                return ret
+        }
     }
 
 }
