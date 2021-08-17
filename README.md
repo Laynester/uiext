@@ -41,6 +41,8 @@ create a subdomain under cloudflare **or** your domain provider, as you would wi
 
 change **"ws"** to your new subdomain in the script you pasted above ^
 
+change any furni's interaction to "trax_machine" to toggle trax list view
+
 #### 2. Server
 
 **Open "server" in terminal/cmd prompt etc**
