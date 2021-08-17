@@ -6,57 +6,47 @@ Copy the RCON plugin to your emulator plugins folder, and run the **required** d
 #### 1. Client
 **Open "client" in terminal/cmd prompt etc**
 ```
+npm i
 npm run build
 ```
 It has created **"dist"**
-Copy the `<script>`'s from the index.html paste into your cms *or* nitro's index.html
+copy **js** & **css** folders to your nitro **or** cms directory
 
-Paste this div above the scripts you just pasted
+paste the following into your cms client.php or nitro's index.html
 ```
+<link href="/css/app.css" rel="stylesheet">
 <div id="le-trax"></div>
-```
-
-Copy the `<link href=""/>` from index.html to your nitro index.html
-
-Copy the JS/css folders and traxEditorConfig.json created in **"dist"** to your cms/nitro directory
-
-The SSO will be passed similarly to nitro
-
-(for nitro)
-```
 <script>
-  window.TraxConfig = {
+  var UIExtConfig = {
+    ws:"wss://uiext.mydomain.com:2095",
+    sounds: "http://127.0.0.1/ms-swf/dcr/hof_furni/mp3/",
     sso: (new URLSearchParams(window.location.search).get('sso') || null)
   }
 </script>
+<script type="text/javascript" src="/js/chunk-vendors.js"></script>
+<script type="text/javascript" src="/js/app.js"></script>
 ```
 
-(for any cms)
-```
-<script>
-  window.TraxConfig = {
-    sso: '<?php  $PutYourShitCodeHere; ?>'
-  }
-</script>
-```
+configure "sounds","ws" & "sso"
+If you pasted into nitro's index.html, leave the SSO as is.
 
-### Set the API in traxEditorConfig.json to the subdomain you create in step 2
+create a subdomain under cloudflare **or** your domain provider, as you would with **nitro** disable SSL etc.
+
+change **"ws"** to your new subdomain in the script you pasted above ^
 
 #### 2. Server
 **Open "server" in terminal/cmd prompt etc**
 ```
-npm start
+npm i
+npm run start
 ```
-##### You will need to create a reverse proxy in IIS or NGINX etc
+configure your databse details in `ormconfig.json`
+configure pricing, ports etc in `config.json`
+"cost" is split into **currency**:**amount**
+```
+"cost": "-1:100,5:20"
+=
+100 credits(-1) 20 diamonds(5)
+```
 
-###### IIS
-Create a subdomain under cloudflare or your domain provider
-Create a "Site" in IIS, click URL Rewrite
-![image](https://user-images.githubusercontent.com/48771551/129498474-fd9948e8-c422-4a36-910e-77db27fc0ab1.png)
-
-Add a new rule (top right)
-![image](https://user-images.githubusercontent.com/48771551/129498482-2f35d4e9-1008-454a-9a82-9124fbcd431d.png)
-![image](https://user-images.githubusercontent.com/48771551/129498515-3c23d666-e81a-42a8-b78a-a7b2f8d61b0a.png)
-
-Set the IP Address/url `localhost:9999` *9999 is the default port*
-![image](https://user-images.githubusercontent.com/48771551/129498533-b6a9109e-2c8a-4278-8e30-694d7045b581.png)
+change `"tokenKey":"changeThisToAPassword",` to a password only to be used between the emulator and the api, you must change this in emulator_settings database table aswell. `UIExtAuth.token`
