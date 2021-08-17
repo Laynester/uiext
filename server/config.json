@@ -1,6 +1,6 @@
 {
     "apiPort":9999,
-    "wsPort":2095,
+    "wsPort":2083,
     "tokenKey":"changeThisToAPassword",
     "rcon_ip": "127.0.0.1",
     "rcon_port": 3001,
