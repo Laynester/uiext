@@ -1,20 +1,27 @@
 # Trax Editor
+
 ### Before installation:
+
 Copy the RCON plugin to your emulator plugins folder, and run the **required** database sql in the **required** folder
 
 ### Installation
+
 #### 1. Client
+
 **Open "client" in terminal/cmd prompt etc**
+
 ```
 npm i
 npm run build
 ```
+
 It has created **"dist"**
 copy **js** & **css** folders to your nitro **or** cms directory
 
 paste the following into your cms client.php or nitro's index.html
+
 ```
-<link href="/css/app.css" rel="stylesheet">
+<link href="/uiext/app.css" rel="stylesheet">
 <div id="uiext-app"></div>
 <script>
   var UIExtConfig = {
@@ -23,8 +30,8 @@ paste the following into your cms client.php or nitro's index.html
     sso: (new URLSearchParams(window.location.search).get('sso') || null)
   }
 </script>
-<script type="text/javascript" src="/js/chunk-vendors.js"></script>
-<script type="text/javascript" src="/js/app.js"></script>
+<script type="text/javascript" src="/uiext/chunk-vendors.js"></script>
+<script type="text/javascript" src="/uiext/app.js"></script>
 ```
 
 configure "sounds","ws" & "sso"
@@ -35,14 +42,18 @@ create a subdomain under cloudflare **or** your domain provider, as you would wi
 change **"ws"** to your new subdomain in the script you pasted above ^
 
 #### 2. Server
+
 **Open "server" in terminal/cmd prompt etc**
+
 ```
 npm i
 npm run start
 ```
+
 configure your databse details in `ormconfig.json`
 configure pricing, ports etc in `config.json`
 "cost" is split into **currency**:**amount**
+
 ```
 "cost": "-1:100,5:20"
 =

@@ -2,14 +2,14 @@ module.exports = {
     productionSourceMap: false,
     configureWebpack: {
         output: {
-            filename: 'js/[name].js',
-            chunkFilename: 'js/[name].js'
+            filename: 'uiext/[name].js',
+            chunkFilename: 'uiext/[name].js'
         }
     },
     css: {
         extract: { 
             ignoreOrder: true,
-            filename: 'css/[name].css', 
+            filename: 'uiext/[name].css', 
           },
     },
     chainWebpack: config => {
