@@ -1,5 +1,5 @@
-ALTER TABLE soundtracks ADD owner int(11);
-ALTER TABLE soundtracks ADD hidden int(11);
+ALTER TABLE soundtracks ADD owner int(11) DEFAULT 0;
+ALTER TABLE soundtracks ADD hidden int(11) DEFAULT 0;
 
 DROP TABLE IF EXISTS `le_trax_sets`;
 CREATE TABLE `le_trax_sets` (
