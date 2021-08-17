@@ -97,7 +97,9 @@ export class CommunicationManager
         }, 2000)
     }
 
-    private sendMessage(message: OutgoingMessage): void {
-        this._webSocket.send(JSON.stringify(message))
+    private sendMessage(message: OutgoingMessage): void
+    {
+        if (!this.connected) this.onClose();
+        else this._webSocket.send(JSON.stringify(message))
     }
 }

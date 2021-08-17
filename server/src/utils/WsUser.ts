@@ -6,6 +6,7 @@ import { PongEvent } from '../networking/incoming/general/PongEvent';
 import { IncomingMessage } from '../networking/incoming/IncomingMessage';
 import { BurnSongEvent } from '../networking/incoming/trax/BurnSongEvent';
 import { CreateSongEvent } from '../networking/incoming/trax/CreateSongEvent';
+import { DeleteSongComposer } from '../networking/incoming/trax/DeleteSongEvent';
 import { RequestCollectionsEvent } from '../networking/incoming/trax/RequestCollectionsEvent';
 import { RequestSongsEvent } from '../networking/incoming/trax/RequestSongsEvent';
 import { PingComposer } from '../networking/outgoing/general/PingComposer';
@@ -40,6 +41,7 @@ export class WsUser
 
         // trax 
         this._events.set("trax_mySongs", new RequestSongsEvent());
+        this._events.set("trax_deleteSong",new DeleteSongComposer())
         this._events.set("trax_burnSong", new BurnSongEvent());
         this._events.set("trax_requestCollections", new RequestCollectionsEvent());
         this._events.set("trax_createSong", new CreateSongEvent());

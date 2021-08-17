@@ -2,6 +2,7 @@
 import { CommunicationManager } from "@/communication/CommunicationManager";
 import { RequestSongsComposer } from "@/communication/outgoing/trax/RequestSongsComposer";
 import { BurnSongComposer } from "@/communication/outgoing/trax/BurnSongComposer";
+import { DeleteSongComposer } from "@/communication/outgoing/trax/DeleteSongComposer";
 import { functions } from "@/utils/traxHandler";
 
 export default {
@@ -35,7 +36,17 @@ export default {
                 new BurnSongComposer(this.selected.id)
             );
         },
-        delete: async function () {},
+        deleteSong() {
+            if (!this.selected.id) return;
+            CommunicationManager.getInstance().sendMessage(
+                new DeleteSongComposer(this.selected.id)
+            );
+            this.selected = {
+                name: "The Habhop",
+                length: "817",
+            };
+            this.changed = false;
+        },
         preview() {
             this.playSong(this.selected.track, this.selected.length, false);
             this.previewing = true;
@@ -73,16 +84,28 @@ export default {
                     @clicked="preview()"
                     colour="success"
                     v-if="!tuned"
+                    :class="{'uiExt-button-disabled':!changed}"
                 />
                 <UIExtButton theme="0" caption="Stop" @clicked="stopSong()" colour="danger" v-else />
             </UIExtBorder>
-            <UIExtButton
-                :class="{'uiExt-button-disabled':!changed}"
-                theme="0"
-                caption="Burn Song"
-                @clicked="burn()"
-                colour="success"
-            />
+            <div class="d-flex flex-row justify-content-between">
+                <UIExtButton
+                    :class="{'uiExt-button-disabled':!changed}"
+                    theme="0"
+                    caption="<i class='far fa-trash-alt'></i>"
+                    @clicked="deleteSong()"
+                    colour="danger"
+                    class="w-100 me-1"
+                />
+                <UIExtButton
+                    :class="{'uiExt-button-disabled':!changed}"
+                    theme="0"
+                    caption="<i class='fas fa-compact-disc'></i>"
+                    @clicked="burn()"
+                    colour="success"
+                    class="w-100 ms-1"
+                />
+            </div>
         </div>
     </div>
 </template>

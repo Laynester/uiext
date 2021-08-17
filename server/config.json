@@ -11,6 +11,6 @@
     },
     "features":{
         "disabledAlert": true,
-        "trax": false
+        "trax": true
     }
 }
