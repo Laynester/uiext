@@ -14,7 +14,15 @@
         "disabledAlert": true,
         "trax": true
     },
-    "debug":{
+    "debug": {
         "trax": true
+    },
+    "client": {
+        "trax": {
+            "theme": "1",
+            "lists": "4",
+            "buttons": "3",
+            "borders":"1"
+        }
     }
 }

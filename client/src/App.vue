@@ -12,6 +12,8 @@ export default {
 
 <template>
     <div class="position-absolute">
-        <TraxEditor />
+        <div v-if="$store.state.config">
+            <TraxEditor />
+        </div>
     </div>
 </template>

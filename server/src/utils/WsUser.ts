@@ -4,6 +4,7 @@ import { Lang } from '../lang/Lang';
 import { UIExt } from '../main';
 import { ConnectionEvent } from '../networking/incoming/general/ConnectionEvent';
 import { PongEvent } from '../networking/incoming/general/PongEvent';
+import { RequestConfig, RequestConfigEvent } from '../networking/incoming/general/RequestConfigEvent';
 import { RequestLangEvent } from '../networking/incoming/general/RequestLangEvent';
 import { IncomingMessage } from '../networking/incoming/IncomingMessage';
 import { BurnSongEvent } from '../networking/incoming/trax/BurnSongEvent';
@@ -40,7 +41,8 @@ export class WsUser
     {
         this._events.set("ping", new PongEvent());
         this._events.set("connection", new ConnectionEvent());
-        this._events.set("language", new RequestLangEvent())
+        this._events.set("language", new RequestLangEvent());
+        this._events.set("config", new RequestConfigEvent())
 
         // trax 
         this._events.set("trax_mySongs", new RequestSongsEvent());

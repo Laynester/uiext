@@ -77,7 +77,7 @@ export default {
                 <UIExtButton
                     class="mb-1"
                     v-for="(r, i) in $store.state.trax.songs"
-                    theme="2"
+                    :theme="$store.state.config.trax.lists"
                     :caption="r.name"
                     :key="i"
                     @clicked="
@@ -90,16 +90,20 @@ export default {
         <div class="uiExtSplitter-ver" />
         <div class="w-100 align-self-center">
             <UIExtButton
-                theme="0"
+                :theme="$store.state.config.trax.buttons"
                 :caption="$filters.translate('trax.window.create')"
                 @clicked="create()"
                 colour="dark"
             />
-            <UIExtBorder theme="0" class="p-2 text-center my-2" ref="tracker">
+            <UIExtBorder
+                :theme="$store.state.config.trax.borders"
+                class="p-2 text-center my-2"
+                ref="tracker"
+            >
                 <b class="d-block">{{ selected.name }}</b>
                 {{ $filters.secondsDuration(tuned ? tracker.timer : selected.length * 2) }}
                 <UIExtButton
-                    theme="0"
+                    :theme="$store.state.config.trax.buttons"
                     :caption="$filters.translate('trax.window.preview')"
                     @clicked="preview()"
                     colour="success"
@@ -107,7 +111,7 @@ export default {
                     :class="{'uiExt-button-disabled':!changed}"
                 />
                 <UIExtButton
-                    theme="0"
+                    :theme="$store.state.config.trax.buttons"
                     :caption="$filters.translate('trax.window.stop')"
                     @clicked="stopSong()"
                     colour="danger"
@@ -117,7 +121,7 @@ export default {
             <div class="d-flex flex-row justify-content-between">
                 <UIExtButton
                     :class="{'uiExt-button-disabled':!changed}"
-                    theme="0"
+                    :theme="$store.state.config.trax.buttons"
                     caption="<i class='far fa-trash-alt'></i>"
                     @clicked="deleteSong()"
                     colour="danger"
@@ -125,7 +129,7 @@ export default {
                 />
                 <UIExtButton
                     :class="{'uiExt-button-disabled':!changed}"
-                    theme="0"
+                    :theme="$store.state.config.trax.buttons"
                     caption="<i class='fas fa-edit'></i>"
                     @clicked="editSong()"
                     colour="warning"
@@ -133,7 +137,7 @@ export default {
                 />
                 <UIExtButton
                     :class="{'uiExt-button-disabled':!changed}"
-                    theme="0"
+                    :theme="$store.state.config.trax.buttons"
                     caption="<i class='fas fa-compact-disc'></i>"
                     @clicked="burn()"
                     colour="success"

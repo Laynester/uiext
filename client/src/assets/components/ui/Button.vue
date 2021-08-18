@@ -10,6 +10,7 @@ export default {
         :class="colour ? `bg-${colour}`: ``"
         :theme="theme"
         @click="$emit('clicked')"
-        v-html="caption"
-    />
+    >
+        <span v-html="caption" />
+    </div>
 </template>

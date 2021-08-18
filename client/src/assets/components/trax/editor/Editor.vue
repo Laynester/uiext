@@ -49,7 +49,7 @@ export default {
             <div class="w-100 me-1 mb-0">
                 <input
                     type="text"
-                    class="w-100 form-control form-control-sm mb-0 le-trax-style-4"
+                    class="w-100 form-control form-control-sm mb-0"
                     :placeholder="`My Sick Beatz`"
                     v-model="name"
                 />
@@ -57,7 +57,7 @@ export default {
             <div class="justify-content-end d-flex flex-row">
                 <UIExtButton
                     v-if="!tuned"
-                    theme="0"
+                    :theme="$store.state.config.trax.buttons"
                     colour="success"
                     @clicked="playSong(
                             getSongString().string,
@@ -69,28 +69,27 @@ export default {
                 />
                 <UIExtButton
                     v-else
-                    theme="0"
+                    :theme="$store.state.config.trax.buttons"
                     colour="danger"
                     @clicked="stopSong()"
                     caption="<i class='fas fa-stop' />"
                     class="px-2 me-1"
                 />
                 <UIExtButton
-                    theme="0"
-                    colour="dark"
+                    :theme="$store.state.config.trax.lists"
                     @clicked="saveSong()"
                     caption="<i class='far fa-save' />"
                     class="px-2 me-1"
                 />
                 <UIExtButton
-                    theme="0"
+                    :theme="$store.state.config.trax.buttons"
                     colour="danger"
                     @clicked="setTracks()"
                     caption="<i class='fas fa-trash-alt' />"
                     class="px-2 me-1"
                 />
                 <UIExtButton
-                    theme="0"
+                    :theme="$store.state.config.trax.buttons"
                     colour="warning"
                     @clicked="$emit('toggleEditor')"
                     caption="<i class='fas fa-sign-out-alt' />"

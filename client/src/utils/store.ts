@@ -3,6 +3,7 @@ import { createStore } from 'vuex';
 export default createStore({
     state: {
         lang: null,
+        config: null,
         window: {
             trax: false
         },
