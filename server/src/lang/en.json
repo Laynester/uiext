@@ -1,0 +1,35 @@
+{
+    "system": {
+        "connected": "%username% has connected",
+        "disconnected": "%username% has disconnected",
+        "listening": "%type% listening on port \"%port%\"",
+        "connected_to": "Connected to %db%",
+        "burned_song": "burned a song",
+        "edited_song": "edited a song",
+        "created_song": "created a song",
+        "deleted_song": "deleted a song"
+    },
+    "trax": {
+        "not_enough": "You don't have enough for this, it cost: ",
+        "burned_song": "You've burned a song, check your inventory for the disc!",
+        "created_song": "Successfully created song!",
+        "edited_song": "Successfully edited song!",
+        "invalid_soundtrack": "Invalid Soundtrack!",
+        "deleted_song": "Successfully deleted that song!",
+        "window": {
+            "title": "Trax",
+            "create": "Create A New Song",
+            "no_songs": "You have no songs yet!",
+            "preview": "Preview Song",
+            "stop": "Stop Preview"
+        }
+    },
+    "duckets": "Duckets",
+    "diamonds": "Diamonds",
+    "credits": "credits",
+    "success": "Success",
+    "error": "Error",
+    "alert": "Alert"
+}
+
+
