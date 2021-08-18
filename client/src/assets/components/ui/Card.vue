@@ -1,6 +1,6 @@
 <script>
 export default {
-    props: ["theme", "title"],
+    props: ["theme", "title", "center"],
     data() {
         return {
             positions: {
@@ -10,6 +10,11 @@ export default {
                 movementY: 0,
             },
         };
+    },
+    mounted() {
+        if (this.$props.center) {
+            this.centerDiv();
+        }
     },
     methods: {
         dragMouseDown: function (event) {
@@ -39,6 +44,16 @@ export default {
         closeDragElement() {
             document.onmouseup = null;
             document.onmousemove = null;
+        },
+        centerDiv() {
+            let div = this.$refs["draggableContainer"];
+            let dWidth = div.offsetWidth / 2;
+            let bWidth = document.body.offsetWidth / 2;
+            let dHeight = div.offsetHeight / 2;
+            let bHeight = document.body.offsetHeight / 2;
+            div.style.left = bWidth - dWidth + "px";
+            div.style.top = bHeight - dHeight + "px";
+            console.log(dWidth);
         },
     },
 };

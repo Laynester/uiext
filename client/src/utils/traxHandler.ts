@@ -33,11 +33,13 @@ const functions = {
                     this.playSong(songString, length, true);
                 }
             }, 2000);
-        } else {
-            this.selected.length = 0;
+        } else
+        {
+            console.log('hello')
+            this.tracker.timer = 0;
             this.tracker.ticker = setInterval(() => {
-                if (this.selected.length < length) {
-                    this.selected.length++;
+                if (this.tracker.timer < length) {
+                    this.tracker.timer++;
                 } else {
                     this.stopTracking();
                     this.playSong(songString, length, false);

@@ -8,6 +8,9 @@ export default {
     methods: {
         toggleEditor() {
             this.$store.state.trax.editor = !this.$store.state.trax.editor;
+            setTimeout(() => {
+                this.$refs["card"].centerDiv();
+            }, 0);
         },
         toggle() {
             this.$store.state.window.trax = false;
@@ -23,6 +26,8 @@ export default {
         theme="0"
         @clicked="toggle()"
         :class="this.$store.state.trax.editor ? `trax-window-editor` : `trax-window-list`"
+        center="true"
+        ref="card"
     >
         <ListView v-if="!this.$store.state.trax.editor" @toggleEditor="toggleEditor()" />
         <Editor v-else @toggleEditor="toggleEditor()" />

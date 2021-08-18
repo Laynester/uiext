@@ -17,7 +17,9 @@ export default {
             },
             tuned: false,
             tracker: {
+                timer: 0,
                 ticker: null,
+                sounds: [],
             },
         };
     },
@@ -58,7 +60,7 @@ export default {
             this.changed = false;
         },
         preview() {
-            this.playSong(this.selected.track, this.selected.length, false);
+            this.playSong(this.selected.track, this.selected.length * 2, false);
             this.previewing = true;
         },
     },
@@ -87,7 +89,7 @@ export default {
             <UIExtButton theme="0" caption="Create a New song" @clicked="create()" colour="dark" />
             <UIExtBorder theme="0" class="p-2 text-center my-2" ref="tracker">
                 <b class="d-block">{{ selected.name }}</b>
-                {{ $filters.secondsDuration(selected.length) }}
+                {{ $filters.secondsDuration(tuned ? tracker.timer : selected.length * 2) }}
                 <UIExtButton
                     theme="0"
                     caption="Preview"
