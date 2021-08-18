@@ -2,7 +2,6 @@
 import { Howl } from "howler";
 import { CommunicationManager } from "../communication/CommunicationManager";
 import { CreateSongComposer } from "../communication/outgoing/trax/CreateSongComposer";
-import { RequestCollectionsComposer } from "../communication/outgoing/trax/RequestCollectionsComposer";
 
 const functions = {
     playSong(songString, length, preview) {
@@ -72,6 +71,8 @@ const functions = {
     playBank(file_names) {
         let self = this;
 
+        let trackerlength = this.tracker.sounds.length + 1;
+
         let helper = new Howl({
             src: [
                 UIExtConfig.sounds +
@@ -87,34 +88,108 @@ const functions = {
             },
         });
 
-        this.tracker.sounds = helper;
-
-        this.tracker.sounds.play();
+        this.tracker.sounds[trackerlength] = helper
+        this.tracker.sounds[trackerlength].play();
     },
     setTracks() {
-        this.tracks = [];
+        this.$store.state.trax.tracks = [];
         for (let i = 0; i < 4; i++) {
             const ar = [];
             for (let i = 0; i < 60; i++) {
                 ar.push(this.selectedRes);
             }
-            this.tracks.push(ar);
+            this.$store.state.trax.tracks.push(ar);
         }
+        this.$forceUpdate();
         this.stopTracking();
         this.stopSong();
+        if (this.$store.state.trax.editing) this.setEditingTrack();
     },
-    setDuped() {
-        this.dupedTracks = [];
-        for (let i = 0; i < 4; i++) {
-            const ar = [];
-            for (let i = 0; i < 60; i++) {
-                ar.push(this.selectedRes);
-            }
-            this.dupedTracks.push(ar)
-        }
+    setEditingTrack()
+    {
+        let songString = this.$store.state.trax.editing.track;
+
+        let song = songString.split(":");
+
+        let rowIndex = 0;
+        this.name = this.$store.state.trax.editing.name
+        song.forEach((row) =>
+        {
+            let set = row.split(";");
+
+            if (!set[0].includes(",")) return;
+            
+            let grouped = 0;
+
+            set.forEach((col,colIndex) =>
+            {
+                let column = col.split(',');
+
+                if (column.length !== 2) return;
+
+                if (column[0] == "0") return;
+
+                let collection = this.findCollection(column[0]).collectionRet;
+
+                let setCollection = this.findCollection(column[0]).setRet;
+
+                this.$store.state.trax.tracks[rowIndex][colIndex + grouped] = {
+                    colour: collection.colour,
+                    sound: column[0],
+                    set: setCollection.set,
+                    id: this.findCollection(column[0]).setInd,
+                    hovering: false,
+                    grouped: setCollection.set,
+                    unique: true,
+                };
+
+                if (setCollection.set > 1)
+                {
+                    console.log(colIndex)
+                    for (let i = 1; i < setCollection.set; i++)
+                    {
+                        this.$store.state.trax.tracks[rowIndex][colIndex + i + grouped] = {
+                            colour: collection.colour,
+                            sound: column[0],
+                            set: setCollection.set,
+                            id: this.findCollection(column[0]).setInd,
+                            hovering: false,
+                            grouped: false,
+                            unique: false,
+                        }; 
+                    }
+                }
+
+                grouped += (setCollection.set - 1);
+
+                this.$forceUpdate()
+            })
+
+            rowIndex++;
+            console.log('row')
+        });
     },
-    load() {
-        CommunicationManager.getInstance().sendMessage(new RequestCollectionsComposer());
+    findCollection(sound)
+    {
+        let collectionRet = null;
+        let setRet = null;
+        let setInd = 0;
+        this.$store.state.trax.collection.forEach((collection) =>
+        {
+            if (collectionRet) return;
+            setInd = 0;
+            collection.sets.forEach((set) =>
+            {
+                if (set.sound == sound)
+                {
+                    collectionRet = collection;
+                    setRet = set;
+                    return
+                }
+                if (!collectionRet) setInd++;
+            });
+        });
+        return {collectionRet, setRet, setInd}
     },
     paginate(type) {
         switch (type) {
@@ -173,12 +248,12 @@ const functions = {
 
         this.$forceUpdate();
 
-        if (this.tracks[i][ind].colour && !this.tracks[i][ind].hovering) {
-            this.resetGroup(i, ind, this.tracks[i][ind].set);
+        if (this.$store.state.trax.tracks[i][ind].colour && !this.$store.state.trax.tracks[i][ind].hovering) {
+            this.resetGroup(i, ind, this.$store.state.trax.tracks[i][ind].set);
             return;
         } else {
             for (let ii = 0; ii < this.selected.set; ii++) {
-                if (this.tracks[i][ind + ii].colour && !this.tracks[i][ind].hovering) safe = false;
+                if (this.$store.state.trax.tracks[i][ind + ii].colour && !this.$store.state.trax.tracks[i][ind].hovering) safe = false;
             }
         }
 
@@ -186,7 +261,7 @@ const functions = {
     },
     resetGroup(i, ind, set) {
         for (let ii = 0; ii < set; ii++) {
-            this.tracks[i][ind + ii] = this.selectedRes;
+            this.$store.state.trax.tracks[i][ind + ii] = this.selectedRes;
         }
 
         if (!this.selected.hovering) this.selected = this.selectedRes;
@@ -199,7 +274,7 @@ const functions = {
 
             if (ii === 0 && this.selected.set >= 1) g = true;
 
-            this.tracks[i][ind + ii] = {
+            this.$store.state.trax.tracks[i][ind + ii] = {
                 colour: this.selected.colour,
                 sound: this.selected.sound,
                 set: this.selected.set,
@@ -224,17 +299,17 @@ const functions = {
             let safe = true
 
             for (let ii = 0; ii < this.selected.set; ii++) {
-                if (this.tracks[i][ind + ii].colour) safe = false;
+                if (this.$store.state.trax.tracks[i][ind + ii].colour) safe = false;
             }
 
             if (safe) return this.setGroup(i, ind);
         }
 
-        if (leave && this.tracks[i][ind].hovering) {
+        if (leave && this.$store.state.trax.tracks[i][ind].hovering) {
             return this.resetGroup(
                 this.hovered.i,
                 this.hovered.ind,
-                this.tracks[i][ind].set
+                this.$store.state.trax.tracks[i][ind].set
             );
         }
     },
@@ -245,7 +320,7 @@ const functions = {
         this.tracker.position = 0;
         this.$refs.tracker.scrollLeft = 0;
         this.tracker.timer = 0;
-        this.tracker.sounds = null
+        this.tracker.sounds = []
     },
     getSongString() {
         let str = "";
@@ -253,7 +328,7 @@ const functions = {
 
         const song = [];
 
-        this.tracks.forEach((e, ind) => {
+        this.$store.state.trax.tracks.forEach((e, ind) => {
             const sounds = [];
             let rowLength = 0;
 
@@ -286,14 +361,20 @@ const functions = {
     },
     stopSong() {
         this.tuned = false;
-        if (this.tracker.sounds) this.tracker.sounds.pause();
-        this.tracker.sounds = null;
+        if (this.tracker.sounds) this.tracker.sounds.forEach(e => {
+            e.pause();
+        })
+        this.tracker.sounds = [];
         this.stopTracking();
     },
     saveSong: async function () {
         if (!this.getSongString().len) return
+
         if (!this.name) return;
-        CommunicationManager.getInstance().sendMessage(new CreateSongComposer(this.name, this.getSongString().string, this.getSongString().len));
+
+        let editId = this.$store.state.trax.editing ? this.$store.state.trax.editing.id : 0
+        
+        CommunicationManager.getInstance().sendMessage(new CreateSongComposer(this.name, this.getSongString().string, this.getSongString().len,editId));
     },
     startDragHandle(e) {
         if (this.playing) return;

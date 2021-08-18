@@ -4,6 +4,7 @@ import { RequestSongsComposer } from "@/communication/outgoing/trax/RequestSongs
 import { BurnSongComposer } from "@/communication/outgoing/trax/BurnSongComposer";
 import { DeleteSongComposer } from "@/communication/outgoing/trax/DeleteSongComposer";
 import { functions } from "@/utils/traxHandler";
+import { RequestCollectionsComposer } from "@/communication/outgoing/trax/RequestCollectionsComposer";
 
 export default {
     data() {
@@ -24,6 +25,10 @@ export default {
         CommunicationManager.getInstance().sendMessage(
             new RequestSongsComposer()
         );
+        CommunicationManager.getInstance().sendMessage(
+            new RequestCollectionsComposer()
+        );
+        this.$store.state.trax.editing = null;
     },
     methods: {
         ...functions,
@@ -35,6 +40,11 @@ export default {
             CommunicationManager.getInstance().sendMessage(
                 new BurnSongComposer(this.selected.id)
             );
+        },
+        editSong() {
+            if (!this.selected.id) return;
+            this.$store.state.trax.editing = this.selected;
+            this.$emit("toggleEditor");
         },
         deleteSong() {
             if (!this.selected.id) return;
@@ -95,7 +105,15 @@ export default {
                     caption="<i class='far fa-trash-alt'></i>"
                     @clicked="deleteSong()"
                     colour="danger"
-                    class="w-100 me-1"
+                    class="w-100"
+                />
+                <UIExtButton
+                    :class="{'uiExt-button-disabled':!changed}"
+                    theme="0"
+                    caption="<i class='fas fa-edit'></i>"
+                    @clicked="editSong()"
+                    colour="warning"
+                    class="w-100 mx-1"
                 />
                 <UIExtButton
                     :class="{'uiExt-button-disabled':!changed}"
@@ -103,7 +121,7 @@ export default {
                     caption="<i class='fas fa-compact-disc'></i>"
                     @clicked="burn()"
                     colour="success"
-                    class="w-100 ms-1"
+                    class="w-100"
                 />
             </div>
         </div>

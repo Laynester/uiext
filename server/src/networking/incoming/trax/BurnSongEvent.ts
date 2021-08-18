@@ -1,6 +1,7 @@
 import { SoundTrackEntity } from '../../../database/entities/SoundTrackEntity';
 import { UserEntity } from '../../../database/entities/UserEntity';
 import { UIExt } from '../../../main';
+import Logger from '../../../utils/Logger';
 import { RCON } from '../../../utils/RCON';
 import { WsUser } from '../../../utils/WsUser';
 import { AlertComposer } from '../../outgoing/trax/AlertComposer';
@@ -72,5 +73,7 @@ export class BurnSongEvent implements IncomingMessage
         if (!safe) return ws.sendMessage(new AlertComposer(1,"You don't have enough for this, it cost: " + currencyString));
 
         RCON.giveItem(ws.account.id, song.item.id)
+
+        Logger.Trax(`${ws.account.username} burned a song`)
     }
 }

@@ -6,8 +6,6 @@ export default {
     data() {
         return {
             playing: null,
-            tracks: [],
-            dupeTracks: [],
             selected: {},
             selectedRes: {
                 colour: "",
@@ -28,15 +26,14 @@ export default {
                 visible: false,
                 ticker: null,
                 position: 0,
-                sounds: null,
                 offset: 0,
+                sounds: [],
             },
             sounds: [],
         };
     },
     mounted() {
         this.setTracks();
-        this.load();
     },
     methods: functions,
     beforeDestroy() {
@@ -103,7 +100,11 @@ export default {
         </div>
         <div class="position-relative">
             <div class="trax-tracks" ref="tracker">
-                <div v-for="(t, i) in tracks" :key="'a' + i" class="trax-track-row d-inline-table">
+                <div
+                    v-for="(t, i) in $store.state.trax.tracks"
+                    :key="'a' + i"
+                    class="trax-track-row d-inline-table"
+                >
                     <div class="w-100 d-flex">
                         <div
                             v-for="(s, ind) in t"

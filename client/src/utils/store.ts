@@ -6,6 +6,7 @@ export default createStore({
             trax: false
         },
         trax: {
+            tracks: [],
             editor: false,
             alert: null,
             songs: null,
@@ -13,6 +14,7 @@ export default createStore({
             visibleCollection: [],
             collectionPages: 0,
             currentPage: 1,
+            editing: null,
         }
     },
 });

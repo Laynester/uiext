@@ -1,4 +1,5 @@
 import chalk = require("chalk");
+import { UIExt } from "../main";
 
 export default class Logger
 {
@@ -31,6 +32,11 @@ export default class Logger
         Logger.Log('Error', msg);
     }
 
+    public static Trax(msg: string)
+    {
+        if(UIExt.getInstance().config.debug.trax) Logger.Log('Trax', msg);
+    }
+
     public static Log(type: string,msg: string)
     {
         let date = new Date();
@@ -50,7 +56,7 @@ export default class Logger
                 return chalk.grey(ret);
             case "User":
                 return chalk.cyan(ret);
-            case "trax":
+            case "Trax":
                 return chalk.blueBright(ret)
             default:
                 return ret

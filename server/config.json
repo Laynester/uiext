@@ -12,5 +12,8 @@
     "features":{
         "disabledAlert": true,
         "trax": true
+    },
+    "debug":{
+        "trax": true
     }
 }
