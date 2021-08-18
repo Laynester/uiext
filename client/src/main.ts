@@ -6,6 +6,7 @@ import Border from '@/assets/components/ui/Border.vue'
 import Store from '@/utils/store'
 import '@/assets/scss/app.scss';
 import moment from 'moment';
+import { Lang } from "./utils/Lang";
 
 const momentDurationFormatSetup = require("moment-duration-format");
 
@@ -22,6 +23,10 @@ app.config.globalProperties.$filters = {
     {
         //  @ts-ignore
         return moment.duration(value, "seconds").format('mm:ss', { trim: false }) + "min";
+    },
+    translate(text:string)
+    {
+        return Lang(text);
     }
 };
 

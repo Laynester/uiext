@@ -22,7 +22,7 @@ export default {
 <template>
     <UIExtCard
         v-if="$store.state.window.trax"
-        title="Trax"
+        :title="$filters.translate('trax.window.title')"
         theme="0"
         @clicked="toggle()"
         :class="this.$store.state.trax.editor ? `trax-window-editor` : `trax-window-list`"

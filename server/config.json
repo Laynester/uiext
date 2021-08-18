@@ -4,6 +4,7 @@
     "tokenKey":"changeThisToAPassword",
     "rcon_ip": "127.0.0.1",
     "rcon_port": 3001,
+    "lang":"en",
     "trax": {
         "item_id": 2607,
         "page_id": 1,

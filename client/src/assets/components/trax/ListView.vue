@@ -69,7 +69,10 @@ export default {
 
 <template>
     <div class="d-flex flex-row h-100">
-        <div class="w-100 me-1 h-100 d-flex flex-column" v-if="$store.state.trax.songs">
+        <div
+            class="w-100 me-1 h-100 d-flex flex-column"
+            v-if="$store.state.trax.songs && $store.state.trax.songs.length"
+        >
             <div class="h-100 overflow-y-scroll pe-1">
                 <UIExtButton
                     class="mb-1"
@@ -83,22 +86,33 @@ export default {
                 />
             </div>
         </div>
-        <div class="w-100 me-1" v-else>You havent created any songs yet!</div>
+        <div class="w-100 me-1" v-else>{{$filters.translate('trax.window.no_songs')}}</div>
         <div class="uiExtSplitter-ver" />
         <div class="w-100 align-self-center">
-            <UIExtButton theme="0" caption="Create a New song" @clicked="create()" colour="dark" />
+            <UIExtButton
+                theme="0"
+                :caption="$filters.translate('trax.window.create')"
+                @clicked="create()"
+                colour="dark"
+            />
             <UIExtBorder theme="0" class="p-2 text-center my-2" ref="tracker">
                 <b class="d-block">{{ selected.name }}</b>
                 {{ $filters.secondsDuration(tuned ? tracker.timer : selected.length * 2) }}
                 <UIExtButton
                     theme="0"
-                    caption="Preview"
+                    :caption="$filters.translate('trax.window.preview')"
                     @clicked="preview()"
                     colour="success"
                     v-if="!tuned"
                     :class="{'uiExt-button-disabled':!changed}"
                 />
-                <UIExtButton theme="0" caption="Stop" @clicked="stopSong()" colour="danger" v-else />
+                <UIExtButton
+                    theme="0"
+                    :caption="$filters.translate('trax.window.stop')"
+                    @clicked="stopSong()"
+                    colour="danger"
+                    v-else
+                />
             </UIExtBorder>
             <div class="d-flex flex-row justify-content-between">
                 <UIExtButton

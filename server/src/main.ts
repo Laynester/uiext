@@ -11,6 +11,7 @@ import * as config from '../config.json';
 import { WsUser } from './utils/WsUser';
 import HttpRouter from './api/HttpRouter';
 import { OutgoingMessage } from './networking/outgoing/OutgoingMessage';
+import { Lang } from './lang/Lang';
 
 export class UIExt
 {
@@ -40,7 +41,7 @@ export class UIExt
         createConnection(DBConfig as MysqlConnectionOptions).then((connection: Connection) =>
         {
             this._database = connection.manager;
-            Logger.Main('Connected to ' + connection.options.database)
+            Logger.Main(Lang('system.connected_to').replace("%db%",connection.options.database))
         });
 
         this.registerSockets();
@@ -65,7 +66,7 @@ export class UIExt
 
         this._server.listen(this._config.wsPort, () =>
         {
-            Logger.Main(`WSS listening on ${this._config.wsPort}`);
+            Logger.Main(Lang("system.listening").replace("%type%","WSS").replace("%port%",config.wsPort));
         });
     }
 
@@ -81,7 +82,7 @@ export class UIExt
 
         this._apiServer.listen(config.apiPort, () =>
         {
-            Logger.Main(`API listening on port ${config.apiPort}`);
+            Logger.Main(Lang("system.listening").replace("%type%","API").replace("%port%",config.apiPort));
         });
     }
 

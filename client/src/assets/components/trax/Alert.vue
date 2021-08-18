@@ -4,11 +4,11 @@ export default {
         getTitle(string) {
             switch (string) {
                 case 0:
-                    return "Success!";
+                    return this.$filters.translate("success");
                 case 1:
-                    return "Error!";
+                    return this.$filters.translate("error");
                 default:
-                    return "Alert";
+                    return this.$filters.translate("alert");
             }
         },
     },

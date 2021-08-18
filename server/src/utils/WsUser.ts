@@ -1,8 +1,10 @@
 import * as WebSocket from 'ws';
 import { UserEntity } from '../database/entities/UserEntity';
+import { Lang } from '../lang/Lang';
 import { UIExt } from '../main';
 import { ConnectionEvent } from '../networking/incoming/general/ConnectionEvent';
 import { PongEvent } from '../networking/incoming/general/PongEvent';
+import { RequestLangEvent } from '../networking/incoming/general/RequestLangEvent';
 import { IncomingMessage } from '../networking/incoming/IncomingMessage';
 import { BurnSongEvent } from '../networking/incoming/trax/BurnSongEvent';
 import { CreateSongEvent } from '../networking/incoming/trax/CreateSongEvent';
@@ -38,6 +40,7 @@ export class WsUser
     {
         this._events.set("ping", new PongEvent());
         this._events.set("connection", new ConnectionEvent());
+        this._events.set("language", new RequestLangEvent())
 
         // trax 
         this._events.set("trax_mySongs", new RequestSongsEvent());
@@ -76,7 +79,7 @@ export class WsUser
     public onClose(): void
     {
         UIExt.getInstance().closeConnection(this);
-        if(this._account) Logger.User(`${this.account.username} has disconnected`)
+        if (this._account) Logger.User(Lang("system.disconnected").replace("%username%", this.account.username));
     }
 
     public sendMessage(message: OutgoingMessage): void

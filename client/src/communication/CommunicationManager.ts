@@ -1,9 +1,12 @@
+import store from "../utils/store";
+import { RequestedLangEvent } from "./incoming/general/RequestedLangEvent";
 import { IncomingMessage } from "./incoming/IncomingMessage";
 import { RequestedCollectionsEvent } from "./incoming/trax/RequestedCollectionsEvent";
 import { RequestedSongsEvent } from "./incoming/trax/RequestedSongsEvent";
 import { TraxAlertEvent } from "./incoming/trax/TraxAlertEvent";
 import { TraxWindowEvent } from "./incoming/trax/TraxWindowEvent";
 import { ConnectionComposer } from "./outgoing/general/ConnectionComposer";
+import { RequestLangComposer } from "./outgoing/general/RequestLangComposer";
 import { OutgoingMessage } from "./outgoing/OutgoingMessage";
 
 export class CommunicationManager
@@ -47,6 +50,7 @@ export class CommunicationManager
 
     private registerMessages(): void
     {
+        this._events.set('language', new RequestedLangEvent())
         this._events.set('trax_window', new TraxWindowEvent());
         this._events.set('trax_requestedSongs', new RequestedSongsEvent());
         this._events.set('trax_requestedCollections', new RequestedCollectionsEvent());
@@ -75,9 +79,8 @@ export class CommunicationManager
     {
         this.connected = true;
         this.reconnect = 0;
-        CommunicationManager.getInstance().sendMessage(
-            new ConnectionComposer(this._config.sso)
-        );
+        this.sendMessage(new ConnectionComposer(this._config.sso));
+        if (!store.state.lang) this.sendMessage(new RequestLangComposer())
     }
 
     private onClose(): void

@@ -1,4 +1,5 @@
 import { UserEntity } from '../../../database/entities/UserEntity';
+import { Lang } from '../../../lang/Lang';
 import Logger from '../../../utils/Logger';
 import { WsUser } from '../../../utils/WsUser';
 import { IncomingMessage } from '../IncomingMessage';
@@ -14,7 +15,7 @@ export class ConnectionEvent implements IncomingMessage
         if (!user) return ws.wsu.close();
 
         ws.account = user;
-
-        Logger.User(`${user.username} has connected`)
+        
+        Logger.User(Lang("system.connected").replace("%username%",ws.account.username))
     }
 }

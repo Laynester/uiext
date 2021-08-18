@@ -1,6 +1,8 @@
 import { SoundTrackEntity } from '../../../database/entities/SoundTrackEntity';
 import { UserEntity } from '../../../database/entities/UserEntity';
+import { Lang } from '../../../lang/Lang';
 import { UIExt } from '../../../main';
+import Logger from '../../../utils/Logger';
 import { RCON } from '../../../utils/RCON';
 import { WsUser } from '../../../utils/WsUser';
 import { AlertComposer } from '../../outgoing/trax/AlertComposer';
@@ -27,6 +29,7 @@ export class DeleteSongComposer implements IncomingMessage
         let songs = await SoundTrackEntity.createQueryBuilder("songs").where({ owner: ws.account.id,hidden:0 }).orderBy('id','DESC').getMany();
 
         ws.sendMessage(new RequestedSongsComposer(songs));
-        ws.sendMessage(new AlertComposer(0,"You've deleted that song!"))
+        ws.sendMessage(new AlertComposer(0, Lang("trax.deleted_song")))
+        Logger.Trax(Lang("system.deleted_song").replace("%username%",ws.account.username));
     }
 }

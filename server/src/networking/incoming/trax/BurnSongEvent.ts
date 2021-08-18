@@ -1,5 +1,6 @@
 import { SoundTrackEntity } from '../../../database/entities/SoundTrackEntity';
 import { UserEntity } from '../../../database/entities/UserEntity';
+import { Lang } from '../../../lang/Lang';
 import { UIExt } from '../../../main';
 import Logger from '../../../utils/Logger';
 import { RCON } from '../../../utils/RCON';
@@ -53,10 +54,10 @@ export class BurnSongEvent implements IncomingMessage
                     switch (currency[0])
                     {
                         case "5":
-                            currencyString += `${currency[1]} Diamonds `;
+                            currencyString += `${currency[1]} ${Lang("diamonds")} `;
                             break;
                         case "0":
-                            currencyString += `${currency[1]} Duckets `;
+                            currencyString += `${currency[1]} ${Lang("duckets")} `;
                             break;
                     }
                     if (temp.amount >= parseInt(currency[1]))
@@ -70,10 +71,11 @@ export class BurnSongEvent implements IncomingMessage
             }
         });
 
-        if (!safe) return ws.sendMessage(new AlertComposer(1,"You don't have enough for this, it cost: " + currencyString));
+        if (!safe) return ws.sendMessage(new AlertComposer(1, Lang("trax.not_enough") + currencyString));
 
         RCON.giveItem(ws.account.id, song.item.id)
 
-        Logger.Trax(`${ws.account.username} burned a song`)
+        Logger.Trax(`${ws.account.username} ${Lang("system.burned_song")}`);
+        ws.sendMessage(new AlertComposer(1, Lang("trax.burned_song") + currencyString));
     }
 }

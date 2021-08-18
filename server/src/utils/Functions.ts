@@ -1,3 +1,5 @@
+import { UIExt } from "../main";
+
 export class Functions
 {
     public static validateSongString(string: string): boolean
@@ -22,5 +24,10 @@ export class Functions
         });
 
         return safe;
+    }
+
+    public static getLang(): any
+    {
+        return require(`../lang/${UIExt.getInstance().config.lang}.json`);
     }
 }

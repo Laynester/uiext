@@ -1,5 +1,6 @@
 import { CatalogItemEntity } from '../../../database/entities/CatalogItemEntity';
 import { SoundTrackEntity } from '../../../database/entities/SoundTrackEntity';
+import { Lang } from '../../../lang/Lang';
 import { UIExt } from '../../../main';
 import { Functions } from '../../../utils/Functions';
 import Logger from '../../../utils/Logger';
@@ -15,7 +16,7 @@ export class CreateSongEvent implements IncomingMessage
     {
         let { name, track, length, editId } = data;
 
-        if (!Functions.validateSongString(track)) return ws.sendMessage(new AlertComposer(1, "Invalid soundtrack!"));
+        if (!Functions.validateSongString(track)) return ws.sendMessage(new AlertComposer(1, Lang("trax.invalid_soundtrack")));
 
         let songs = await SoundTrackEntity.createQueryBuilder("songs").where({ owner: ws.account.id, hidden: 0 }).orderBy('id', 'DESC').getMany();
         
@@ -31,10 +32,10 @@ export class CreateSongEvent implements IncomingMessage
                 await soundtrack.save();
 
                 ws.sendMessage(new RequestedSongsComposer(songs));
-                ws.sendMessage(new AlertComposer(0, "Successfully edited song!"));
+                ws.sendMessage(new AlertComposer(0, Lang("trax.edited_song")));
                 ws.sendMessage(new TraxWindowComposer(true, false));
 
-                Logger.Trax(`${ws.account.username} edited a song`)
+                Logger.Trax(`${ws.account.username} ${Lang("system.edited_song")}`)
             }
         } else
         {
@@ -58,9 +59,9 @@ export class CreateSongEvent implements IncomingMessage
     
             ws.sendMessage(new RequestedSongsComposer(songs));
     
-            ws.sendMessage(new AlertComposer(0, "Successfully created song!"));
+            ws.sendMessage(new AlertComposer(0, Lang("trax.created_song")));
             ws.sendMessage(new TraxWindowComposer(true, false));
-            Logger.Trax(`${ws.account.username} created a song`)
+            Logger.Trax(`${ws.account.username} ${Lang("system.created_song")}`)
             
         }
     }
