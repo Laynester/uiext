@@ -24,7 +24,7 @@ export default {
             :theme="$store.state.config.trax.theme"
             :title="getTitle($store.state.trax.alert.type)"
             @clicked="$store.state.trax.alert = null"
-            class="text-align-center"
+            class="text-center"
         >{{$store.state.trax.alert.message}}</UIExtCard>
     </div>
 </template>

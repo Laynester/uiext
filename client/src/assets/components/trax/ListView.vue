@@ -101,7 +101,7 @@ export default {
                 ref="tracker"
             >
                 <b class="d-block">{{ selected.name }}</b>
-                {{ $filters.secondsDuration(tuned ? tracker.timer : selected.length * 2) }}
+                {{ $filters.secondsDuration(tuned ? tracker.timer : selected.length) }}
                 <UIExtButton
                     :theme="$store.state.config.trax.buttons"
                     :caption="$filters.translate('trax.window.preview')"

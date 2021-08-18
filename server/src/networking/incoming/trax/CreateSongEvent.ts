@@ -27,7 +27,7 @@ export class CreateSongEvent implements IncomingMessage
             if (soundtrack)
             {
                 soundtrack.track = track;
-                soundtrack.length = length;
+                soundtrack.length = length * 2;
                 soundtrack.name = name;
                 await soundtrack.save();
 
@@ -43,7 +43,8 @@ export class CreateSongEvent implements IncomingMessage
                 code: `${ws.account.username}-${Date.now()}`,
                 name,
                 author: ws.account.username,
-                track, length,
+                track,
+                length: length * 2,
                 owner: ws.account.id
             }).save();
     

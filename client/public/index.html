@@ -20,7 +20,18 @@
         sso: (new URLSearchParams(window.location.search).get('sso') || null)
       }
     </script>
-    <iframe style="height:100vh;width:100vw;border:0;" src="http://127.0.0.1:8080/nitro?sso=plz2"></iframe>
+    <script>
+      window.onload = () =>{
+        console.log('hello')
+        let iframe = document.createElement('iframe');
+
+        iframe.src = "http://127.0.0.1:8080/nitro?sso=" + (new URLSearchParams(window.location.search).get('sso') || null);
+
+        iframe.style = "height:100vh;width:100vw;border:0;";
+
+        document.body.appendChild(iframe)
+      }
+    </script>
     <!-- built files will be auto injected -->
   </body>
 </html>

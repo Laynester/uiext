@@ -1,6 +1,10 @@
 .uiExt-card {
-    font-size: $font-size-base + em;
+    font-size: $font-size-base + px;
     color: #000;
+
+    * {
+        user-select: none;
+    }
 
     &[theme="0"] {
         border: 1px solid $il-border-colour;
