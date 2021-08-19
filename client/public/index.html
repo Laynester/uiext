@@ -22,7 +22,6 @@
     </script>
     <script>
       window.onload = () =>{
-        console.log('hello')
         let iframe = document.createElement('iframe');
 
         iframe.src = "http://127.0.0.1:8080/nitro?sso=" + (new URLSearchParams(window.location.search).get('sso') || null);

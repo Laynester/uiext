@@ -1,5 +1,4 @@
 import { UIExt } from "../main";
-import * as english from "./en.json";
 
 export function Lang(text: string)
 {
@@ -15,10 +14,9 @@ export function Lang(text: string)
 
     let parts = text.split(".");
 
-    switch (UIExt.getInstance().config.lang)
-    {
-        case "en":
-        default:
-            return fromKey(parts.shift(), parts, english);
-    }
+    let lang = require(`./${UIExt.getInstance().config.lang}.json`);
+
+    if (!lang) return text;
+
+    return fromKey(parts.shift(), parts, lang)
 }
