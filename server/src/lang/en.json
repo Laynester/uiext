@@ -7,7 +7,9 @@
         "burned_song": "burned a song",
         "edited_song": "edited a song",
         "created_song": "created a song",
-        "deleted_song": "deleted a song"
+        "deleted_song": "deleted a song",
+        "requested_game": "%user% requested a game to %user2%",
+        "started_game": "%user% started a game of %game% against %user2%"
     },
     "trax": {
         "not_enough": "You don't have enough for this, it cost: ",
@@ -29,7 +31,27 @@
     "credits": "credits",
     "success": "Success",
     "error": "Error",
-    "alert": "Alert"
+    "alert": "Alert",
+    "user_offline": "That user is offline!",
+    "games":{
+        "requested": "They have recieved your request, please wait!",
+        "self_busy": "You're already in a game!",
+        "busy": "This player is busy, try again in a few minutes!",
+        "no_invites": "You have no pending invites :(",
+        "won_game": "%user% won a game against %user2%",
+        "ttt":{
+            "name": "Tic Tac Toe",
+            "window": {
+                "title": "Tic Tac Toe",
+                "request_input":"Send a request to a user",
+                "no_longer_request":"That user is no longer requesting!",
+                "player": "Player",
+                "you": "You",
+                "won": "You won %currency%!",
+                "lost": "You lost :("
+            }
+        }
+    }
 }
 
 

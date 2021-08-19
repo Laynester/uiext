@@ -23,6 +23,7 @@
             box-shadow: 0 1px #fff;
             margin-bottom: 5px;
             padding-bottom: 5px;
+            font-size: $font-size-base + 2 + px;
             span {
                 align-self: center;
                 display: block;
@@ -74,6 +75,14 @@
             box-shadow: 1px 0 $white;
             margin: 0 5px;
         }
+
+        .uiExtSplitter-hor {
+            width: 100%;
+            border-bottom: 1px solid $il-border-colour;
+            box-shadow: 0 1px $white;
+            margin: 5px 0;
+        }
+
         * {
             &::-webkit-scrollbar {
                 width: 9px;
@@ -110,7 +119,7 @@
             color: #fff;
             height: 33px;
             line-height: 33px;
-            font-size: 14px;
+            font-size: $font-size-base + 2 + px;
             font-weight: bold;
         }
 
@@ -139,6 +148,13 @@
             margin: 0 5px;
         }
 
+        .uiExtSplitter-hor {
+            width: 100%;
+            border-bottom: 1px solid #000;
+            box-shadow: 0 1px $white;
+            margin: 5px 0;
+        }
+
         .uiExt-cardBody {
             padding: 5px;
         }
@@ -163,5 +179,18 @@
                 border-radius: 4px;
             }
         }
+    }
+}
+
+.uiExt-alert-overlay {
+    top: 0;
+    left: 0;
+    background: rgba(black, 0.3);
+    z-index: 9;
+    border-radius: 5px;
+
+    .uiExt-card {
+        width: 75%;
+        position: relative;
     }
 }

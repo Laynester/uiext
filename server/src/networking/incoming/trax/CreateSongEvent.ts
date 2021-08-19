@@ -5,7 +5,7 @@ import { UIExt } from '../../../main';
 import { Functions } from '../../../utils/Functions';
 import Logger from '../../../utils/Logger';
 import { WsUser } from '../../../utils/WsUser';
-import { AlertComposer } from '../../outgoing/trax/AlertComposer';
+import { AlertComposer } from '../../outgoing/general/AlertComposer';
 import { RequestedSongsComposer } from '../../outgoing/trax/RequestedSongsComposer';
 import { TraxWindowComposer } from '../../outgoing/trax/TraxWindowComposer';
 import { IncomingMessage } from '../IncomingMessage';
@@ -16,7 +16,7 @@ export class CreateSongEvent implements IncomingMessage
     {
         let { name, track, length, editId } = data;
 
-        if (!Functions.validateSongString(track)) return ws.sendMessage(new AlertComposer(1, Lang("trax.invalid_soundtrack")));
+        if (!Functions.validateSongString(track)) return ws.sendMessage(new AlertComposer(1, Lang("trax.invalid_soundtrack"),"trax"));
 
         let songs = await SoundTrackEntity.createQueryBuilder("songs").where({ owner: ws.account.id, hidden: 0 }).orderBy('id', 'DESC').getMany();
         
@@ -32,7 +32,7 @@ export class CreateSongEvent implements IncomingMessage
                 await soundtrack.save();
 
                 ws.sendMessage(new RequestedSongsComposer(songs));
-                ws.sendMessage(new AlertComposer(0, Lang("trax.edited_song")));
+                ws.sendMessage(new AlertComposer(0, Lang("trax.edited_song"),"trax"));
                 ws.sendMessage(new TraxWindowComposer(true, false));
 
                 Logger.Trax(`${ws.account.username} ${Lang("system.edited_song")}`)
@@ -60,7 +60,7 @@ export class CreateSongEvent implements IncomingMessage
     
             ws.sendMessage(new RequestedSongsComposer(songs));
     
-            ws.sendMessage(new AlertComposer(0, Lang("trax.created_song")));
+            ws.sendMessage(new AlertComposer(0, Lang("trax.created_song"),"trax"));
             ws.sendMessage(new TraxWindowComposer(true, false));
             Logger.Trax(`${ws.account.username} ${Lang("system.created_song")}`)
             

@@ -37,6 +37,11 @@ export default class Logger
         if(UIExt.getInstance().config.debug.trax) Logger.Log('Trax', msg);
     }
 
+    public static Games(msg: string)
+    {
+        if(UIExt.getInstance().config.debug.games) Logger.Log('Games', msg);
+    }
+
     public static Log(type: string,msg: string)
     {
         let date = new Date();
@@ -57,7 +62,9 @@ export default class Logger
             case "User":
                 return chalk.cyan(ret);
             case "Trax":
-                return chalk.blueBright(ret)
+                return chalk.blueBright(ret);
+            case "Games":
+                return chalk.yellowBright(ret)
             default:
                 return ret
         }

@@ -12,6 +12,7 @@ import { WsUser } from './utils/WsUser';
 import HttpRouter from './api/HttpRouter';
 import { OutgoingMessage } from './networking/outgoing/OutgoingMessage';
 import { Lang } from './lang/Lang';
+import { Games } from './games/Games';
 
 export class UIExt
 {
@@ -27,8 +28,9 @@ export class UIExt
 
     private _config = config;
 
+    private _wsuCollection: WsUser[];
 
-    private _wsuCollection: Array<WsUser>;
+    private _games: Games[];
 
     constructor()
     {
@@ -47,6 +49,7 @@ export class UIExt
         this.registerSockets();
         this.registerAPI();
         this._wsuCollection = [];
+        this._games = [];
     }
 
     public static getInstance(): UIExt
@@ -122,9 +125,20 @@ export class UIExt
     {
         return this._database;
     }
+
     public get config(): any
     {
         return this._config;
+    }
+
+    public get games(): Games[]
+    {
+        return this._games;
+    }
+
+    public set games(games)
+    {
+        this._games = games;
     }
 }
 

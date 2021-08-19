@@ -1,5 +1,5 @@
 <script>
-import Alert from "./Alert.vue";
+import Alert from "../ui/Alert.vue";
 import Editor from "./editor/Editor.vue";
 import ListView from "./ListView.vue";
 
@@ -31,6 +31,10 @@ export default {
     >
         <ListView v-if="!this.$store.state.trax.editor" @toggleEditor="toggleEditor()" />
         <Editor v-else @toggleEditor="toggleEditor()" />
-        <Alert />
+        <Alert
+            :theme="$store.state.config.trax.theme"
+            :alert="$store.state.trax.alert"
+            @clear="$store.state.trax.alert = null"
+        />
     </UIExtCard>
 </template>

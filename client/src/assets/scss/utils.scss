@@ -1,3 +1,11 @@
 .overflow-y-scroll {
     overflow-y: scroll;
 }
+
+.uiExt-input {
+    border: 1px solid rgba($black, 0.5);
+    background: white;
+    box-shadow: 0 1px white, inset 0 2px rgba($black, 0.2);
+    border-radius: 3px;
+    margin-bottom: 1px;
+}

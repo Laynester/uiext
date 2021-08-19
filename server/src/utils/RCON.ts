@@ -65,4 +65,17 @@ export class RCON
             }
         })
     }
+
+    static talkUser(user_id: number, type: string, message: string, bubble: number = -1)
+    {
+        RCON.sendMessage({
+            key: 'talkuser',
+            data: {
+                user_id,
+                type,
+                message,
+                bubble
+            }
+        })
+    }
 }

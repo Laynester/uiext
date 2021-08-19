@@ -5,7 +5,7 @@ import { UIExt } from '../../../main';
 import Logger from '../../../utils/Logger';
 import { RCON } from '../../../utils/RCON';
 import { WsUser } from '../../../utils/WsUser';
-import { AlertComposer } from '../../outgoing/trax/AlertComposer';
+import { AlertComposer } from '../../outgoing/general/AlertComposer';
 import { IncomingMessage } from '../IncomingMessage';
 
 export class BurnSongEvent implements IncomingMessage
@@ -71,11 +71,11 @@ export class BurnSongEvent implements IncomingMessage
             }
         });
 
-        if (!safe) return ws.sendMessage(new AlertComposer(1, Lang("trax.not_enough") + currencyString));
+        if (!safe) return ws.sendMessage(new AlertComposer(1, Lang("trax.not_enough") + currencyString,"trax"));
 
         RCON.giveItem(ws.account.id, song.item.id)
 
         Logger.Trax(`${ws.account.username} ${Lang("system.burned_song")}`);
-        ws.sendMessage(new AlertComposer(1, Lang("trax.burned_song") + currencyString));
+        ws.sendMessage(new AlertComposer(1, Lang("trax.burned_song") + currencyString,"trax"));
     }
 }

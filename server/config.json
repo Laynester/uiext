@@ -10,12 +10,22 @@
         "page_id": 1,
         "cost": "-1:100,5:20"
     },
+    "games": {
+        "ttt":{
+            "size":3,
+            "max":3,
+            "givePrize": true,
+            "prize": "-1:1,5:10"
+        }
+    },
     "features":{
         "disabledAlert": true,
-        "trax": true
+        "trax": true,
+        "games-ttt": true
     },
     "debug": {
-        "trax": true
+        "trax": true,
+        "games": true
     },
     "client": {
         "trax": {
@@ -23,6 +33,13 @@
             "lists": "4",
             "buttons": "3",
             "borders":"1"
+        },
+        "games": {
+            "ttt": {
+                "theme": "0",
+                "lists": "2",
+                "buttons": "1"
+            }
         }
     }
 }

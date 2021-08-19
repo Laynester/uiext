@@ -1,0 +1,18 @@
+.uiExt-game-ttt {
+    .uiExt-game-ttt-board-row {
+        &:not(:last-child) {
+            border-bottom: 1px solid black;
+        }
+    }
+    .uiExt-game-ttt-board-cell {
+        width: 60px;
+        height: 60px;
+        font-size: 18px;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        &:not(:last-child) {
+            border-right: 1px solid black;
+        }
+    }
+}

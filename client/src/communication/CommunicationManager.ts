@@ -1,15 +1,18 @@
 import store from "../utils/store";
+import { GameWindowEvent } from "./incoming/games/GameWindowEvent";
 import { RequestedConfigEvent } from "./incoming/general/RequestedConfigEvent";
 import { RequestedLangEvent } from "./incoming/general/RequestedLangEvent";
 import { IncomingMessage } from "./incoming/IncomingMessage";
 import { RequestedCollectionsEvent } from "./incoming/trax/RequestedCollectionsEvent";
 import { RequestedSongsEvent } from "./incoming/trax/RequestedSongsEvent";
-import { TraxAlertEvent } from "./incoming/trax/TraxAlertEvent";
+import { AlertEvent } from "./incoming/general/AlertEvent";
 import { TraxWindowEvent } from "./incoming/trax/TraxWindowEvent";
 import { ConnectionComposer } from "./outgoing/general/ConnectionComposer";
 import { RequestConfigComposer } from "./outgoing/general/RequestConfigComposer";
 import { RequestLangComposer } from "./outgoing/general/RequestLangComposer";
 import { OutgoingMessage } from "./outgoing/OutgoingMessage";
+import { GameInviteEvent } from "./incoming/games/GameInviteEvent";
+import { TicTacToeGameBoardEvent } from "./incoming/games/TicTacToe/TicTacToeGameBoardEvent";
 
 export class CommunicationManager
 {
@@ -53,11 +56,20 @@ export class CommunicationManager
     private registerMessages(): void
     {
         this._events.set('language', new RequestedLangEvent());
-        this._events.set("config", new RequestedConfigEvent())
+        this._events.set("config", new RequestedConfigEvent());
+        this._events.set("alert", new AlertEvent())
+
+        // trax
         this._events.set('trax_window', new TraxWindowEvent());
         this._events.set('trax_requestedSongs', new RequestedSongsEvent());
         this._events.set('trax_requestedCollections', new RequestedCollectionsEvent());
-        this._events.set('trax_alert', new TraxAlertEvent())
+
+        // games
+        this._events.set("game_windowEvent", new GameWindowEvent());
+        this._events.set("game_invite", new GameInviteEvent())
+
+        // ttt
+        this._events.set("game_ttt_board", new TicTacToeGameBoardEvent())
     }
 
     private onMessage(message: string | MessageEvent): void

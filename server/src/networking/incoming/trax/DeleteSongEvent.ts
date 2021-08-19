@@ -5,7 +5,7 @@ import { UIExt } from '../../../main';
 import Logger from '../../../utils/Logger';
 import { RCON } from '../../../utils/RCON';
 import { WsUser } from '../../../utils/WsUser';
-import { AlertComposer } from '../../outgoing/trax/AlertComposer';
+import { AlertComposer } from '../../outgoing/general/AlertComposer';
 import { RequestedSongsComposer } from '../../outgoing/trax/RequestedSongsComposer';
 import { IncomingMessage } from '../IncomingMessage';
 
@@ -29,7 +29,7 @@ export class DeleteSongComposer implements IncomingMessage
         let songs = await SoundTrackEntity.createQueryBuilder("songs").where({ owner: ws.account.id,hidden:0 }).orderBy('id','DESC').getMany();
 
         ws.sendMessage(new RequestedSongsComposer(songs));
-        ws.sendMessage(new AlertComposer(0, Lang("trax.deleted_song")))
+        ws.sendMessage(new AlertComposer(0, Lang("trax.deleted_song"),"trax"))
         Logger.Trax(Lang("system.deleted_song").replace("%username%",ws.account.username));
     }
 }

@@ -1,5 +1,6 @@
 <script>
 export default {
+    props: ["theme", "alert"],
     methods: {
         getTitle(string) {
             switch (string) {
@@ -17,14 +18,14 @@ export default {
 
 <template>
     <div
-        class="h-100 w-100 trax-alert-overlay position-absolute d-flex align-items-center justify-content-center"
-        v-if="$store.state.trax.alert"
+        class="h-100 w-100 uiExt-alert-overlay position-absolute d-flex align-items-center justify-content-center"
+        v-if="alert"
     >
         <UIExtCard
-            :theme="$store.state.config.trax.theme"
-            :title="getTitle($store.state.trax.alert.type)"
-            @clicked="$store.state.trax.alert = null"
+            :theme="theme"
+            :title="getTitle(alert.type)"
+            @clicked="$emit('clear')"
             class="text-center"
-        >{{$store.state.trax.alert.message}}</UIExtCard>
+        >{{alert.message}}</UIExtCard>
     </div>
 </template>

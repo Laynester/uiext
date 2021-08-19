@@ -1,10 +1,14 @@
 import * as WebSocket from 'ws';
 import { UserEntity } from '../database/entities/UserEntity';
+import { Games } from '../games/Games';
 import { Lang } from '../lang/Lang';
 import { UIExt } from '../main';
+import { GameInviteEvent } from '../networking/incoming/games/GameInviteEvent';
+import { StartGameEvent } from '../networking/incoming/games/StartGameEvent';
+import { TicTacToeGameMoveEvent } from '../networking/incoming/games/TicTacToe/TicTacToeGameMoveEvent';
 import { ConnectionEvent } from '../networking/incoming/general/ConnectionEvent';
 import { PongEvent } from '../networking/incoming/general/PongEvent';
-import { RequestConfig, RequestConfigEvent } from '../networking/incoming/general/RequestConfigEvent';
+import { RequestConfigEvent } from '../networking/incoming/general/RequestConfigEvent';
 import { RequestLangEvent } from '../networking/incoming/general/RequestLangEvent';
 import { IncomingMessage } from '../networking/incoming/IncomingMessage';
 import { BurnSongEvent } from '../networking/incoming/trax/BurnSongEvent';
@@ -15,12 +19,16 @@ import { RequestSongsEvent } from '../networking/incoming/trax/RequestSongsEvent
 import { PingComposer } from '../networking/outgoing/general/PingComposer';
 import  {OutgoingMessage } from '../networking/outgoing/OutgoingMessage';
 import Logger from './Logger';
+import { StatusEnum } from './StatusEnum';
 
 export class WsUser
 {
     private _wsu: WebSocket;
     private _events: Map<String, IncomingMessage>;
     private _account: UserEntity;
+    private _game: Games;
+
+    private _status: StatusEnum = StatusEnum.FREE;
 
     constructor(ws: WebSocket)
     {
@@ -50,6 +58,13 @@ export class WsUser
         this._events.set("trax_burnSong", new BurnSongEvent());
         this._events.set("trax_requestCollections", new RequestCollectionsEvent());
         this._events.set("trax_createSong", new CreateSongEvent());
+
+        // games
+        this._events.set("game_invite", new GameInviteEvent());
+        this._events.set("game_start", new StartGameEvent());
+
+        // ttt
+        this._events.set("game_ttt_move", new TicTacToeGameMoveEvent())
     }
 
     public keepAlive(): void
@@ -75,13 +90,14 @@ export class WsUser
         let parser = this._events.get(json.header);
 
         if (parser) parser.parse(this, json.data);
-        else Logger.Error(message.toString());
+        else Logger.Error(message.data);
     }
 
     public onClose(): void
     {
         UIExt.getInstance().closeConnection(this);
         if (this._account) Logger.User(Lang("system.disconnected").replace("%username%", this.account.username));
+        if (this._game) this._game.endGame()
     }
 
     public sendMessage(message: OutgoingMessage): void
@@ -102,5 +118,25 @@ export class WsUser
     public set account(entity: UserEntity)
     {
         this._account = entity;
+    }
+
+    public get game(): Games
+    {
+        return this._game;
+    }
+    
+    public set game(game: Games)
+    {
+        this._game = game;
+    }
+
+    public get status(): number
+    {
+        return this._status;
+    }
+
+    public set status(status: StatusEnum)
+    {
+        this._status = status;
     }
 }

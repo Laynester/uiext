@@ -2,6 +2,7 @@ import { Router, Request, Response } from "express";
 import { UIExt } from "../main";
 import { TestController } from './controllers/TestController';
 import TraxRouter from './controllers/trax/TraxRouter';
+import GameRouter from './controllers/game/GameRouter';
 
 let router = Router();
 
@@ -17,5 +18,7 @@ router.use((req: Request, res: Response) =>
 router.get('/settings', TestController.data);
 
 router.use('/trax', TraxRouter);
+
+router.use('/game', GameRouter);
 
 export default router;
