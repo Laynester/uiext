@@ -2,3 +2,5 @@
 */node_modules
 */dist
 .vscode
+plugin/.idea
+*.code-workspace

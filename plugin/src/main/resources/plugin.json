@@ -1,0 +1,5 @@
+{
+  "main" : "com.laynester.plugins.extensions.Plugin",
+  "name" : "UI Extensions",
+  "author" : "Laynester"
+}
