@@ -8,7 +8,8 @@
     "trax": {
         "item_id": 2607,
         "page_id": 1,
-        "cost": "-1:100,5:20"
+        "cost": "-1:100,5:20",
+        "achievement_id": 2758
     },
     "games": {
         "icon": "${image.library.url}/notifications",

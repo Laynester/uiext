@@ -91,4 +91,17 @@ export class RCON
             }
         })
     }
+
+    static progressAchievement(user_id: number, achievement_id: number, progress: number = 1)
+    {
+        RCON.sendMessage({
+            key: 'progressachievement',
+            data: {
+                user_id,
+                achievement_id,
+                progress
+            }
+        })
+    }
+    
 }

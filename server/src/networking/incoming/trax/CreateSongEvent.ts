@@ -4,6 +4,7 @@ import { Lang } from '../../../lang/Lang';
 import { UIExt } from '../../../main';
 import { Functions } from '../../../utils/Functions';
 import Logger from '../../../utils/Logger';
+import { RCON } from '../../../utils/RCON';
 import { WsUser } from '../../../utils/WsUser';
 import { AlertComposer } from '../../outgoing/general/AlertComposer';
 import { RequestedSongsComposer } from '../../outgoing/trax/RequestedSongsComposer';
@@ -60,9 +61,13 @@ export class CreateSongEvent implements IncomingMessage
     
             ws.sendMessage(new RequestedSongsComposer(songs));
     
-            ws.sendMessage(new AlertComposer(0, Lang("trax.created_song"),"trax"));
+            ws.sendMessage(new AlertComposer(0, Lang("trax.created_song"), "trax"));
+            
             ws.sendMessage(new TraxWindowComposer(true, false));
-            Logger.Trax(`${ws.account.username} ${Lang("system.created_song")}`)
+
+            RCON.progressAchievement(ws.account.id, UIExt.getInstance().config.trax.achievement_id);
+
+            Logger.Trax(`${ws.account.username} ${Lang("system.created_song")}`);
             
         }
     }

@@ -1,3 +1,14 @@
+INSERT INTO `achievements` (`name`, `category`, `level`, `reward_amount`, `reward_type`, `points`, `progress_needed`) VALUES ('TraxCreated', 'music', 1, 100, 0, 10, 1);
+INSERT INTO `achievements` (`name`, `category`, `level`, `reward_amount`, `reward_type`, `points`, `progress_needed`) VALUES ('TraxCreated', 'music', 2, 100, 0, 15, 5);
+INSERT INTO `achievements` (`name`, `category`, `level`, `reward_amount`, `reward_type`, `points`, `progress_needed`) VALUES ('TraxCreated', 'music', 3, 100, 0, 20, 10);
+INSERT INTO `achievements` (`name`, `category`, `level`, `reward_amount`, `reward_type`, `points`, `progress_needed`) VALUES ('TraxCreated', 'music', 4, 100, 0, 25, 15);
+INSERT INTO `achievements` (`name`, `category`, `level`, `reward_amount`, `reward_type`, `points`, `progress_needed`) VALUES ('TraxCreated', 'music', 5, 100, 0, 30, 20);
+INSERT INTO `achievements` (`name`, `category`, `level`, `reward_amount`, `reward_type`, `points`, `progress_needed`) VALUES ('TraxCreated', 'music', 6, 100, 0, 35, 30);
+INSERT INTO `achievements` (`name`, `category`, `level`, `reward_amount`, `reward_type`, `points`, `progress_needed`) VALUES ('TraxCreated', 'music', 7, 100, 0, 40, 40);
+INSERT INTO `achievements` (`name`, `category`, `level`, `reward_amount`, `reward_type`, `points`, `progress_needed`) VALUES ('TraxCreated', 'music', 8, 100, 0, 45, 60);
+INSERT INTO `achievements` (`name`, `category`, `level`, `reward_amount`, `reward_type`, `points`, `progress_needed`) VALUES ('TraxCreated', 'music', 9, 100, 0, 50, 80);
+INSERT INTO `achievements` (`name`, `category`, `level`, `reward_amount`, `reward_type`, `points`, `progress_needed`) VALUES ('TraxCreated', 'music', 10, 100, 0, 55, 100);
+
 ALTER TABLE soundtracks ADD owner int(11) DEFAULT 0;
 ALTER TABLE soundtracks ADD hidden int(11) DEFAULT 0;
 
