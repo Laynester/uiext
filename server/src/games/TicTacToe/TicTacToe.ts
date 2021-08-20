@@ -57,7 +57,7 @@ export class TicTacToe extends Games
 
         if (vars !== null) return this.announceWin(vars);
 
-        //this._turn = this._turn == "o" ? "x" : "o";
+        this._turn = this._turn == "o" ? "x" : "o";
 
         this.host.sendMessage(new TicTacToeGameBoardComposer(this._gameBoard, this._turn, "o"));
 
