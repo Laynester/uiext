@@ -57,7 +57,7 @@ export class TicTacToe extends Games
 
         if (vars !== null) return this.announceWin(vars);
 
-        this._turn = this._turn == "o" ? "x" : "o";
+        //this._turn = this._turn == "o" ? "x" : "o";
 
         this.host.sendMessage(new TicTacToeGameBoardComposer(this._gameBoard, this._turn, "o"));
 
@@ -204,7 +204,7 @@ export class TicTacToe extends Games
         }
 
         // check faulty 
-        let gameSize: number = size * 2;
+        let gameSize: number = size * size;
         let done: number = 0;
 
         for (let r: number = 0; r < size; r++)
@@ -213,7 +213,6 @@ export class TicTacToe extends Games
             {
                 if (this._gameBoard[r][c] !== "") done++;
                 if (done == gameSize) this.failedGame();
-                return null;
             }
         }
 
@@ -252,8 +251,8 @@ export class TicTacToe extends Games
 
     private failedGame(): void
     {
-        this.endGame();
         this.sendToPlayers(new AlertComposer(3, Lang("games.no_one_won"),"game.ttt"))
+        this.endGame();
     }
 
     private givePrize(player: WsUser): string
