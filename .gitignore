@@ -4,3 +4,4 @@
 .vscode
 plugin/.idea
 *.code-workspace
+/plugin/target
