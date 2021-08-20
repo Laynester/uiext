@@ -17,9 +17,9 @@ export class GameInviteEvent implements IncomingMessage
 
         let user = await UserEntity.createQueryBuilder("user").where({ username: data.user }).getOne();
 
-        if (user.username == ws.account.username) return;
-
         if (!user) return;
+
+        if (user.username == ws.account.username) return;
         
         if (user.online == 0) return ws.sendMessage(new AlertComposer(1, Lang('user_offline'), "game.ttt"));
 

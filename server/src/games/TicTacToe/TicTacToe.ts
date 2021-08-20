@@ -53,96 +53,176 @@ export class TicTacToe extends Games
      
         this._gameBoard[row][column] = type;
 
-        this.checkWin(type);
+        let vars: number[] = this.checkWin();
 
-        this._turn = this._turn == "o" ? "x" : "o";
+        if (vars !== null) return this.announceWin(vars);
+
+        //this._turn = this._turn == "o" ? "x" : "o";
 
         this.host.sendMessage(new TicTacToeGameBoardComposer(this._gameBoard, this._turn, "o"));
 
         this.secondary.sendMessage(new TicTacToeGameBoardComposer(this._gameBoard, this._turn, "x"));
     }
 
-    private checkWin(type: string): void
+    private checkWin(): any[]
     {
-        if (!this._gameBoard) return;
+        if (!this._gameBoard) return null;
 
         let size: number = UIExt.getInstance().config.games.ttt.size;
 
-        let max: number = UIExt.getInstance().config.games.ttt.max;
+        let num_in_row: number = UIExt.getInstance().config.games.ttt.max
 
-        let rows:number = 0;
+        let winningCoords: Array<Array<number>> = [];
 
-        //rows
-        for (let i: number = 0; i < size; i++)
-        {
-            rows = 0;
-            for (let c: number = 0; c < size; c++)
-            {
-                if(type == this._gameBoard[i][c]) rows++;
-                if(rows == max) return this.playerWon(type)
-            }
-        }
-
-        let cols = [];
-
-        //cols
-        for (let i: number = 0; i < size; i++)
-        {
-            for (let c: number = 0; c < size; c++)
-            {
-                if (!cols[c]) cols[c] = 0;
-                if(type == this._gameBoard[i][c]) cols[c]++;
-                if(cols[c] == max) return this.playerWon(type)
-            }
-        }
-
-        let diag: number = 0;
-
-        // top left - bottom right
+        // rows
         for (let r: number = 0; r < size; r++)
         {
             for (let c: number = 0; c < size; c++)
             {
-                if (this._gameBoard[r][c + diag] == "") break;
+                let letter: string = this._gameBoard[r][c];
 
-                if (type == this._gameBoard[r][c + diag]) diag++;
+                winningCoords = [];
 
-                if (diag == max) return this.playerWon(type);
+                if (letter == "") continue;
+
+                for (let k: number = 0; k < num_in_row; k++)
+                {
+                    if ((c + k) >= num_in_row) continue;
+
+                    let newLetter: string = this._gameBoard[r][c + k];
+
+                    if (newLetter !== "" && newLetter == letter)
+                    {
+                        winningCoords.push([r, c + k]);
+                        letter = newLetter;
+
+                        if(winningCoords.length >= num_in_row) return [letter, winningCoords]
+                    } else
+                    {
+                        winningCoords = [];
+                    }
+                }
             }
         }
-        
 
-        diag = 0;
-
-
-        // top right - bottom left
+        // columns
         for (let r: number = 0; r < size; r++)
         {
-            if (type == this._gameBoard[r][size - 1 - diag]) diag++;
+            for (let c: number = 0; c < size; c++)
+            {
+                let letter: string = this._gameBoard[r][c];
 
-            if (diag == max) return this.playerWon(type);
+                winningCoords = [];
+
+                if (letter == "") continue;
+
+                for (let k: number = 0; k < num_in_row; k++)
+                {
+                    if ((r + k) >= num_in_row) continue
+
+                    let newLetter: string = this._gameBoard[r + k][c];
+
+                    if (newLetter !== "" && newLetter == letter)
+                    {
+                        winningCoords.push([r + k, c]);
+                        letter = newLetter;
+
+                        if(winningCoords.length >= num_in_row) return [letter, winningCoords]
+                    } else
+                    {
+                        winningCoords = [];
+                    }
+                }
+            }
         }
 
-        diag = 0;
-
-        // bottom left - top right
-        for (let r: number = (size - 1); r >= 0; r--)
+        // top left bottom right
+        for (let r: number = 0; r < size; r++)
         {
-            if (type == this._gameBoard[r][diag]) diag++;
+            for (let c: number = 0; c < size; c++)
+            {
+                let letter: string = this._gameBoard[r][c];
 
-            if (diag == max) return this.playerWon(type);
+                winningCoords = [];
+
+                if (letter == "") continue;
+
+                for (let k: number = 0; k < num_in_row; k++)
+                {
+                    if ((r + k) >= num_in_row || (r + k) >= num_in_row) continue
+
+                    let newLetter: string = this._gameBoard[r + k][c + k];
+
+                    if (newLetter !== "" && newLetter == letter)
+                    {
+                        winningCoords.push([r + k, c + k]);
+                        letter = newLetter;
+
+                        if(winningCoords.length >= num_in_row) return [letter, winningCoords]
+                    } else
+                    {
+                        winningCoords = [];
+                    }
+                }
+            }
         }
 
-        diag = 0;
-
-        // bottom left - top right
-        for (let r: number = (size - 1); r >= 0; r--)
+        // top right bottom left
+        for (let r: number = 0; r < size; r++)
         {
-            if (type == this._gameBoard[r][size - 1 - diag]) diag++;
+            for (let c: number = 0; c < size; c++)
+            {
+                let letter: string = this._gameBoard[r][c];
 
-            if (diag == max) return this.playerWon(type);
+                winningCoords = [];
+
+                if (letter == "") continue;
+
+                for (let k: number = 0; k < num_in_row; k++)
+                {
+                    let newX: number = r - k;
+                    let newY: number = c + k;
+
+                    if (newX < 0) continue;
+
+                    if (newX >= num_in_row || newY >= num_in_row) continue;
+
+                    let newLetter: string = this._gameBoard[newX][newY];
+
+                    if (newLetter !== "" && newLetter == letter)
+                    {
+                        winningCoords.push([newX, newY]);
+                        letter = newLetter;
+
+                        if (winningCoords.length >= num_in_row) return [letter, winningCoords]
+                    } else
+                    {
+                        winningCoords = [];
+                    }
+                }
+            }
         }
-        
+
+        // check faulty 
+        let gameSize: number = size * 2;
+        let done: number = 0;
+
+        for (let r: number = 0; r < size; r++)
+        {
+            for (let c: number = 0; c < size; c++)
+            {
+                if (this._gameBoard[r][c] !== "") done++;
+                if (done == gameSize) this.failedGame();
+                return null;
+            }
+        }
+
+        return null;
+    }
+
+    private announceWin(variables: any[]): void
+    {
+        this.playerWon(variables[0])
     }
 
     private playerWon(type: string)
@@ -163,12 +243,17 @@ export class TicTacToe extends Games
         winner.sendMessage(new AlertComposer(3, Lang("games.ttt.window.won").replace("%currency%", this.givePrize(this.secondary)), "game.ttt"))
         loser.sendMessage(new AlertComposer(3, Lang("games.ttt.window.lost"), "game.ttt"))
 
-        this.sendToPlayers(new GameWindowComposer("ttt", true, false));
         this.endGame();
         
         RCON.talkUser(winner.account.id, Lang("games.won_game")
             .replace("%user%", winner.account.username)
             .replace("%user2%", loser.account.username), "talk")
+    }
+
+    private failedGame(): void
+    {
+        this.endGame();
+        this.sendToPlayers(new AlertComposer(3, Lang("games.no_one_won"),"game.ttt"))
     }
 
     private givePrize(player: WsUser): string

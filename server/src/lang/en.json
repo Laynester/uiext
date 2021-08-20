@@ -39,6 +39,7 @@
         "busy": "This player is busy, try again in a few minutes!",
         "no_invites": "You have no pending invites :(",
         "won_game": "%user% won a game against %user2%",
+        "no_one_won": "No one won the game :(",
         "ttt":{
             "name": "Tic Tac Toe",
             "window": {
