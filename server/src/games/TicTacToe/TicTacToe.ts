@@ -1,8 +1,8 @@
 import { Lang } from "../../lang/Lang";
 import { UIExt } from "../../main";
-import { GameWindowComposer } from "../../networking/outgoing/games/GameWindowComposer";
 import { TicTacToeGameBoardComposer } from "../../networking/outgoing/games/TicTacToe/TicTacToeGameBoardComposer";
 import { AlertComposer } from "../../networking/outgoing/general/AlertComposer";
+import Logger from "../../utils/Logger";
 import { RCON } from "../../utils/RCON";
 import { WsUser } from "../../utils/WsUser";
 import { Games } from "../Games";
@@ -57,7 +57,7 @@ export class TicTacToe extends Games
 
         if (vars !== null) return this.announceWin(vars);
 
-        //this._turn = this._turn == "o" ? "x" : "o";
+        this._turn = this._turn == "o" ? "x" : "o";
 
         this.host.sendMessage(new TicTacToeGameBoardComposer(this._gameBoard, this._turn, "o"));
 
@@ -243,10 +243,15 @@ export class TicTacToe extends Games
         loser.sendMessage(new AlertComposer(3, Lang("games.ttt.window.lost"), "game.ttt"))
 
         this.endGame();
-        
-        RCON.talkUser(winner.account.id, Lang("games.won_game")
+
+        let winString: string = Lang("games.won_game")
             .replace("%user%", winner.account.username)
-            .replace("%user2%", loser.account.username), "talk")
+            .replace("%game%", Lang(`games.${this.gameName}.name`))
+            .replace("%user2%", loser.account.username);
+        
+        Logger.Games(winString);
+        
+        RCON.talkUser(winner.account.id, "shout", winString, 1);
     }
 
     private failedGame(): void

@@ -53,4 +53,9 @@ export class Games
     {
         return this._secondary
     }
+
+    public get gameName(): string
+    {
+        return this._gameName;
+    }
 }

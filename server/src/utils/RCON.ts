@@ -66,15 +66,28 @@ export class RCON
         })
     }
 
-    static talkUser(user_id: number, type: string, message: string, bubble: number = -1)
+    static talkUser(user_id: number, type: string, message: string, bubble_id: number = -1)
     {
         RCON.sendMessage({
             key: 'talkuser',
             data: {
-                user_id,
                 type,
+                user_id,
+                bubble_id,
+                message
+            }
+        })
+    }
+
+    static bubbleAlertUser(user_id: number, message: string, icon: string, user_two_id: number = 0)
+    {
+        RCON.sendMessage({
+            key: 'bubblealert',
+            data: {
+                user_id,
                 message,
-                bubble
+                icon,
+                user_two_id
             }
         })
     }

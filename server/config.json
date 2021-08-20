@@ -11,6 +11,7 @@
         "cost": "-1:100,5:20"
     },
     "games": {
+        "icon": "${image.library.url}/notifications",
         "ttt":{
             "size":3,
             "max":3,

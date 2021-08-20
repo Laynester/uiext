@@ -10,6 +10,7 @@ import com.eu.habbo.plugin.events.emulator.EmulatorLoadItemsManagerEvent;
 import com.eu.habbo.plugin.events.emulator.EmulatorLoadedEvent;
 import com.laynester.plugins.extensions.interactions.InteractionTicTacToeChair;
 import com.laynester.plugins.extensions.interactions.InteractionTraxMachine;
+import com.laynester.plugins.extensions.rcon.BubbleAlert;
 import com.laynester.plugins.extensions.rcon.GiveItem;
 import org.slf4j.LoggerFactory;
 
@@ -44,6 +45,7 @@ public class Plugin extends HabboPlugin implements EventListener {
         Logger("Has loaded");
 
         Emulator.getRconServer().addRCONMessage("giveitem", GiveItem.class);
+        Emulator.getRconServer().addRCONMessage("bubblealert", BubbleAlert.class);
         Emulator.getConfig().register("UIExtAuth.api.port","9999");
         Emulator.getConfig().register("UIExtAuth.token","changeThisToAPassword");
     }

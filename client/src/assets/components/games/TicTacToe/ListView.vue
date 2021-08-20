@@ -28,12 +28,17 @@ export default {
         deleteInvite(ind) {
             this.$store.state.games.ttt.invites.splice(ind, 1);
         },
+        inviteFriends() {
+            CommunicationManager.getInstance().sendMessage(
+                new GameInviteComposer("ttt", "", true)
+            );
+        },
     },
 };
 </script>
 
 <template>
-    <div class="h-100">
+    <div class="h-100 d-flex flex-column">
         <input
             type="text"
             class="uiExt-input w-100 mb-1"
@@ -70,5 +75,14 @@ export default {
             </div>
         </div>
         <div class="w-100 text-center" v-else>{{$filters.translate('games.no_invites')}}</div>
+        <div class="mt-auto">
+            <UIExtButton
+                :caption="$filters.translate('games.invite_friends')"
+                :theme="$store.state.config.games.ttt.buttons"
+                colour="dark"
+                @clicked="inviteFriends()"
+                class="mt-1"
+            />
+        </div>
     </div>
 </template>

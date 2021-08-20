@@ -38,8 +38,10 @@
         "self_busy": "You're already in a game!",
         "busy": "This player is busy, try again in a few minutes!",
         "no_invites": "You have no pending invites :(",
-        "won_game": "%user% won a game against %user2%",
+        "won_game": "%user% won a game of %game% against %user2%",
         "no_one_won": "No one won the game :(",
+        "invited": "%user% invited you to a game of %game%",
+        "invite_friends": "Invite All Friends",
         "ttt":{
             "name": "Tic Tac Toe",
             "window": {
