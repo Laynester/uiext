@@ -18,12 +18,15 @@
         "edited_song": "Successfully edited song!",
         "invalid_soundtrack": "Invalid Soundtrack!",
         "deleted_song": "Successfully deleted that song!",
+        "now_playing": "Now playing: %song% by %user%",
         "window": {
             "title": "Trax",
             "create": "Create A New Song",
             "no_songs": "You have no songs yet!",
             "preview": "Preview Song",
-            "stop": "Stop Preview"
+            "stop": "Stop Preview",
+            "playPlaylist": "Play Playlist",
+            "stopPlaylist": "Stop Playing"
         }
     },
     "duckets": "Duckets",

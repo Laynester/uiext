@@ -14,10 +14,6 @@ export class ModifyPlaylistEvent implements IncomingMessage
 
         if (!ws.room) return;
 
-        let song = await SoundTrackEntity.createQueryBuilder("song").where({ id: data.id }).getOne();
-
-        if (!song) return;
-
         if (data.remove)
         {
             let sound: UITraxPlaylistEntity = await UITraxPlaylistEntity.createQueryBuilder("song").where({ id: data.id }).getOne();
@@ -26,6 +22,9 @@ export class ModifyPlaylistEvent implements IncomingMessage
             sound.save();
         } else
         {
+            let song = await SoundTrackEntity.createQueryBuilder("song").where({ id: data.id }).getOne();
+
+            if (!song) return;
 
             let added: UITraxPlaylistEntity = await UITraxPlaylistEntity
                 .getRepository().create({

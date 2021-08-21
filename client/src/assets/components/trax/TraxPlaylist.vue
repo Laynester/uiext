@@ -27,5 +27,5 @@ export default {
 </script>
 
 <template>
-    <div id="trax-playlist-preview">{{$store.state.trax.playingSong}}</div>
+    <div id="trax-playlist-preview" class="d-none">{{$store.state.trax.playingSong}}</div>
 </template>

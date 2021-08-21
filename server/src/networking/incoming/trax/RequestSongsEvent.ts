@@ -31,7 +31,7 @@ export class RequestSongsEvent implements IncomingMessage
             discIds.push(parseInt(id));
         });
 
-        let discSongs: SoundTrackEntity[] = await SoundTrackEntity.createQueryBuilder("song").where("song.id IN (:...ids)", { ids: discIds }).getMany();
+        let discSongs: SoundTrackEntity[] = await SoundTrackEntity.createQueryBuilder("song").where("song.id IN (:...ids) AND song.id NOT IN (:...songIds)", { ids: discIds, songIds: songIds }).getMany();
 
         discSongs.forEach(el =>
         {

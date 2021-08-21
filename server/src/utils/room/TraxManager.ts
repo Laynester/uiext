@@ -1,6 +1,9 @@
 import { SoundTrackEntity } from "../../database/entities/SoundTrackEntity";
 import { UITraxPlaylistEntity } from "../../database/entities/UIExtTraxPlaylistEntity";
+import { Lang } from "../../lang/Lang";
+import { UIExt } from "../../main";
 import { PlayingSongComposer } from "../../networking/outgoing/trax/PlayingSongComposer";
+import { RCON } from "../RCON";
 import { Room } from "./Room";
 
 export class TraxManager
@@ -67,6 +70,11 @@ export class TraxManager
         this._room.sendToPlayers(new PlayingSongComposer(null));
 
         this._room.sendToPlayers(new PlayingSongComposer(playing.song));
+
+        this._room.players.forEach(e =>
+        {
+            RCON.bubbleAlertUser(e, Lang("trax.now_playing").replace("%song%",playing.song.name).replace("%user%",playing.song.author), UIExt.getInstance().config.trax.bubble_icon)
+        })
 
         this._cycle = setTimeout(() =>
         {

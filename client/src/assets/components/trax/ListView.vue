@@ -93,11 +93,11 @@ export default {
 
 <template>
     <div class="d-flex flex-row h-100">
-        <div
-            class="w-100 me-1 h-100 d-flex flex-column"
-            v-if="$store.state.trax.songs && $store.state.trax.songs.length"
-        >
-            <div class="h-100 overflow-y-scroll pe-1 mb-1">
+        <div class="w-100 me-1 h-100 d-flex flex-column">
+            <div
+                class="h-100 overflow-y-scroll pe-1 mb-1"
+                v-if="$store.state.trax.songs && $store.state.trax.songs.length"
+            >
                 <div
                     class="d-flex flex-row w-100 mb-1"
                     v-for="(r, i) in $store.state.trax.songs"
@@ -121,6 +121,7 @@ export default {
                     />
                 </div>
             </div>
+            <div class="w-100 me-1 h-100 mb-1" v-else>{{$filters.translate('trax.window.no_songs')}}</div>
             <UIExtButton
                 :theme="$store.state.config.trax.buttons"
                 :caption="$filters.translate('trax.window.create')"
@@ -129,13 +130,12 @@ export default {
             />
             <UIExtButton
                 :theme="$store.state.config.trax.buttons"
-                :caption="$filters.translate('trax.window.playPlaylist')"
+                :caption="$store.state.trax.playlist.playing ? $filters.translate('trax.window.stopPlaylist') : $filters.translate('trax.window.playPlaylist')"
                 @clicked="toggleJukebox()"
                 :colour="$store.state.trax.playlist.playing ? 'danger' : 'success'"
                 class="mt-1"
             />
         </div>
-        <div class="w-100 me-1" v-else>{{$filters.translate('trax.window.no_songs')}}</div>
         <div class="uiExtSplitter-ver" />
         <div class="w-100 align-self-center h-100 d-flex flex-column">
             <div class="h-100 overflow-y-scroll pe-1" v-if="$store.state.trax.playlist.songs">
