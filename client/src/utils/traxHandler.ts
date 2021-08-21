@@ -146,7 +146,6 @@ const functions = {
 
                 if (setCollection.set > 1)
                 {
-                    console.log(colIndex)
                     for (let i = 1; i < setCollection.set; i++)
                     {
                         this.$store.state.trax.tracks[rowIndex][colIndex + i + grouped] = {
