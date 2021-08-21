@@ -1,0 +1,40 @@
+name: Build Client
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Create Artifacts Directory
+      run: |
+        mkdir artifacts
+        cp -R required artifacts
+        cp -R server artifacts
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Build
+      working-directory: ./client
+      run: |
+        npm install
+        npm run build
+        rm dist/index.html
+        cp -R dist ../artifacts
+        
+    - uses: actions/upload-artifact@v2
+      with:
+        name: build-artifact
+        path: artifacts

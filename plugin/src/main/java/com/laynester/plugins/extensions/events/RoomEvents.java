@@ -39,21 +39,23 @@ public class RoomEvents implements EventListener {
 
         if(room == null) return;
 
-        if(room.getOwnerId() != event.habbo.getHabboInfo().getId()) {
-            event.setCancelled(true);
-            return;
-        }
-
-        int machines = 0;
-
-        for(HabboItem item : room.getFloorItems()) {
-            if(item instanceof  InteractionTraxMachine) {
-                machines++;
+        if(event.furniture instanceof InteractionTraxMachine) {
+            if(room.getOwnerId() != event.habbo.getHabboInfo().getId()) {
+                event.setCancelled(true);
+                return;
             }
-        }
 
-        if(event.furniture instanceof InteractionTraxMachine && machines > 0) {
-            event.setCancelled(true);
+            int machines = 0;
+
+            for(HabboItem item : room.getFloorItems()) {
+                if(item instanceof  InteractionTraxMachine) {
+                    machines++;
+                }
+            }
+
+            if(machines > 0) {
+                event.setCancelled(true);
+            }
         }
     }
 }
