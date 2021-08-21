@@ -48,9 +48,7 @@ public class RoomEvents implements EventListener {
             int machines = 0;
 
             for(HabboItem item : room.getFloorItems()) {
-                if(item instanceof  InteractionTraxMachine) {
-                    machines++;
-                }
+                if(item instanceof  InteractionTraxMachine) machines++;
             }
 
             if(machines > 0) {

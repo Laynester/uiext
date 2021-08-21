@@ -44,6 +44,8 @@ export class TraxController
 
         let owner: WsUser = UIExt.getInstance().findUserById(room.room.owner_id);
 
+        if (!owner) return res.json({})
+
         owner.sendMessage(new TraxWindowComposer(false, false));
         
         return res.json({});
