@@ -327,6 +327,14 @@
     }
 }
 
+.uiExt-button {
+    &.isburneddisc {
+        background-image: url("../images/disc.png");
+        background-position: left 5px center;
+        background-repeat: no-repeat;
+    }
+}
+
 @keyframes marquee {
     0% {
         transform: translateX(100%);

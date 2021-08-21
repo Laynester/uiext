@@ -105,6 +105,7 @@ export default {
                 >
                     <UIExtButton
                         class="w-100"
+                        :class="{'isburneddisc':r.disc}"
                         :theme="$store.state.config.trax.lists"
                         :caption="r.name"
                         @clicked="
