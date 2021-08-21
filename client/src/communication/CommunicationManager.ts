@@ -13,6 +13,8 @@ import { RequestLangComposer } from "./outgoing/general/RequestLangComposer";
 import { OutgoingMessage } from "./outgoing/OutgoingMessage";
 import { GameInviteEvent } from "./incoming/games/GameInviteEvent";
 import { TicTacToeGameBoardEvent } from "./incoming/games/TicTacToe/TicTacToeGameBoardEvent";
+import { RequestedPlaylistEvent } from "./incoming/trax/RequestedPlaylistEvent";
+import { PlayingSongEvent } from "./incoming/trax/PlayingSongEvent";
 
 export class CommunicationManager
 {
@@ -63,6 +65,8 @@ export class CommunicationManager
         this._events.set('trax_window', new TraxWindowEvent());
         this._events.set('trax_requestedSongs', new RequestedSongsEvent());
         this._events.set('trax_requestedCollections', new RequestedCollectionsEvent());
+        this._events.set('trax_requestedPlaylist', new RequestedPlaylistEvent());
+        this._events.set('trax_playingSong', new PlayingSongEvent())
 
         // games
         this._events.set("game_windowEvent", new GameWindowEvent());

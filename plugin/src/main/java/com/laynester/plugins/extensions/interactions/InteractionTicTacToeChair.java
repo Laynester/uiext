@@ -25,7 +25,7 @@ public class InteractionTicTacToeChair extends InteractionDefault {
 
         if(habbo == null) return;
 
-        new SendToAPI("api/game/open/ttt/" + habbo.getHabboInfo().getId());
+        new SendToAPI("game/open/ttt/" + habbo.getHabboInfo().getId());
 
         super.onWalkOn(roomUnit, room, objects);
     }
@@ -36,7 +36,7 @@ public class InteractionTicTacToeChair extends InteractionDefault {
 
         if(habbo == null) return;
 
-        new SendToAPI("api/game/close/ttt/" + habbo.getHabboInfo().getId());
+        new SendToAPI("game/close/ttt/" + habbo.getHabboInfo().getId());
 
         super.onWalkOff(roomUnit, room, objects);
     }

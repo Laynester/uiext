@@ -7,6 +7,7 @@ import com.eu.habbo.habbohotel.items.interactions.InteractionDefault;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.laynester.plugins.extensions.utils.SendToAPI;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -32,10 +33,18 @@ public class InteractionTraxMachine extends InteractionDefault {
     public void onClick(GameClient client, Room room, Object[] objects) throws Exception {
         if (client == null)
             return;
+        new SendToAPI("trax/open/" + client.getHabbo().getHabboInfo().getId());
 
-        new SendToAPI("api/trax/open/" + client.getHabbo().getHabboInfo().getId());
-
-        super.onClick(client, room, objects);
+        //super.onClick(client, room, objects);
     }
+
+    @Override
+    public void onPickUp(Room room) {
+        super.onPickUp(room);
+        try {
+            new SendToAPI("trax/pickup/" + getRoomId());
+        } catch (IOException ignored) {}
+    }
+
 }
 

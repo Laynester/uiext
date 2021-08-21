@@ -5,4 +5,6 @@ let router = Router();
 
 router.get('/open/:id', TraxController.open);
 
+router.get('/pickup/:id', TraxController.pickup);
+
 export default router;

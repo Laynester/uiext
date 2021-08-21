@@ -12,6 +12,16 @@ INSERT INTO `achievements` (`name`, `category`, `level`, `reward_amount`, `rewar
 ALTER TABLE soundtracks ADD owner int(11) DEFAULT 0;
 ALTER TABLE soundtracks ADD hidden int(11) DEFAULT 0;
 
+ALTER TABLE rooms ADD trax_active int(11) DEFAULT 0;
+
+DROP TABLE IF EXISTS `uiext_trax_playlist`;
+CREATE TABLE `uiext_trax_playlist` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `room_id` int DEFAULT '0',
+  `song_id` int DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 DROP TABLE IF EXISTS `le_trax_sets`;
 CREATE TABLE `le_trax_sets` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,

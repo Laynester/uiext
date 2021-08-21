@@ -3,6 +3,7 @@ import { UIExt } from "../main";
 import { TestController } from './controllers/TestController';
 import TraxRouter from './controllers/trax/TraxRouter';
 import GameRouter from './controllers/game/GameRouter';
+import RoomRouter from './controllers/room/RoomRouter';
 
 let router = Router();
 
@@ -20,5 +21,7 @@ router.get('/settings', TestController.data);
 router.use('/trax', TraxRouter);
 
 router.use('/game', GameRouter);
+
+router.use('/room', RoomRouter);
 
 export default router;

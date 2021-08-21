@@ -14,11 +14,15 @@ import { IncomingMessage } from '../networking/incoming/IncomingMessage';
 import { BurnSongEvent } from '../networking/incoming/trax/BurnSongEvent';
 import { CreateSongEvent } from '../networking/incoming/trax/CreateSongEvent';
 import { DeleteSongComposer } from '../networking/incoming/trax/DeleteSongEvent';
+import { ModifyPlaylistEvent } from '../networking/incoming/trax/ModifyPlaylistEvent';
 import { RequestCollectionsEvent } from '../networking/incoming/trax/RequestCollectionsEvent';
+import { RequestPlaylistEvent } from '../networking/incoming/trax/RequestPlaylistEvent';
 import { RequestSongsEvent } from '../networking/incoming/trax/RequestSongsEvent';
+import { TogglePlaylistEvent } from '../networking/incoming/trax/TogglePlaylistEvent';
 import { PingComposer } from '../networking/outgoing/general/PingComposer';
 import  {OutgoingMessage } from '../networking/outgoing/OutgoingMessage';
 import Logger from './Logger';
+import { Room } from './room/Room';
 import { StatusEnum } from './StatusEnum';
 
 export class WsUser
@@ -29,6 +33,8 @@ export class WsUser
     private _game: Games;
 
     private _status: StatusEnum = StatusEnum.FREE;
+
+    private _room: Room;
 
     constructor(ws: WebSocket)
     {
@@ -58,6 +64,9 @@ export class WsUser
         this._events.set("trax_burnSong", new BurnSongEvent());
         this._events.set("trax_requestCollections", new RequestCollectionsEvent());
         this._events.set("trax_createSong", new CreateSongEvent());
+        this._events.set("trax_requestPlaylist", new RequestPlaylistEvent());
+        this._events.set("trax_modifyPlaylist", new ModifyPlaylistEvent());
+        this._events.set("trax_togglePlaylist", new TogglePlaylistEvent())
 
         // games
         this._events.set("game_invite", new GameInviteEvent());
@@ -138,5 +147,15 @@ export class WsUser
     public set status(status: StatusEnum)
     {
         this._status = status;
+    }
+
+    public get room(): Room
+    {
+        return this._room;
+    }
+
+    public set room(room: Room)
+    {
+        this._room = room;
     }
 }

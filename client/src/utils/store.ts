@@ -18,6 +18,11 @@ export default createStore({
             collectionPages: 0,
             currentPage: 1,
             editing: null,
+            playlist: {
+                songs: null,
+                playing: false,
+            },
+            playingSong: null
         },
         games: {
             ttt: {

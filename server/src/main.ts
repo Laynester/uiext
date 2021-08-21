@@ -13,6 +13,7 @@ import HttpRouter from './api/HttpRouter';
 import { OutgoingMessage } from './networking/outgoing/OutgoingMessage';
 import { Lang } from './lang/Lang';
 import { Games } from './games/Games';
+import { Room } from './utils/room/Room';
 
 export class UIExt
 {
@@ -32,6 +33,8 @@ export class UIExt
 
     private _games: Games[];
 
+    private _rooms: Room[];
+
     constructor()
     {
         console.clear();
@@ -50,6 +53,7 @@ export class UIExt
         this.registerAPI();
         this._wsuCollection = [];
         this._games = [];
+        this._rooms = []
     }
 
     public static getInstance(): UIExt
@@ -121,6 +125,18 @@ export class UIExt
         wsu.sendMessage(message);
     }
 
+    public findRoomById(id: number): Room
+    {
+        let room: Room = null;
+        
+        this._rooms.forEach((r: Room) =>
+        {
+            if (r.id == id) return room = r;
+        });
+
+        return room;
+    }
+
     public get database(): EntityManager
     {
         return this._database;
@@ -139,6 +155,16 @@ export class UIExt
     public set games(games)
     {
         this._games = games;
+    }
+
+    public get rooms(): Room[]
+    {
+        return this._rooms;
+    }
+
+    public set rooms(rooms: Room[])
+    {
+        this._rooms = rooms;
     }
 }
 

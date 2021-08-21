@@ -35,7 +35,6 @@ const functions = {
             }, 2000);
         } else
         {
-            console.log('hello')
             this.tracker.timer = 0;
             this.tracker.ticker = setInterval(() => {
                 if (this.tracker.timer < length) {
@@ -320,7 +319,7 @@ const functions = {
         this.tracker.visible = false;
         this.tuned = false;
         this.tracker.position = 0;
-        this.$refs.tracker.scrollLeft = 0;
+        if(this.$refs.tracker) this.$refs.tracker.scrollLeft = 0;
         this.tracker.timer = 0;
         this.tracker.sounds = []
     },

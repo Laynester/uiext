@@ -9,7 +9,7 @@ import java.net.URL;
 
 public class SendToAPI {
     public SendToAPI(String url) throws IOException {
-        URL urlSend = new URL("http://127.0.0.1:" + Emulator.getConfig().getValue("UIExtAuth.api.port") + "/" + url);
+        URL urlSend = new URL("http://127.0.0.1:" + Emulator.getConfig().getValue("UIExtAuth.api.port") + "/api/" + url);
 
         HttpURLConnection con = (HttpURLConnection) urlSend.openConnection();
 

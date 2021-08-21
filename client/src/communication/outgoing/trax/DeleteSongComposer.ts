@@ -5,7 +5,7 @@ export class DeleteSongComposer implements OutgoingMessage
     public header = "trax_deleteSong";
     data: any;
 
-    constructor(id:number)
+    constructor(id: number)
     {
         this.data = {
             id
