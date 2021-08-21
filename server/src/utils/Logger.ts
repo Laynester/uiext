@@ -1,5 +1,6 @@
 import chalk = require("chalk");
 import { UIExt } from "../main";
+import * as version from '../../package.json';
 
 export default class Logger
 {
@@ -12,9 +13,9 @@ export default class Logger
 .##.....##..##.....######......###.......##...
 .##.....##..##.....##.........##.##......##...
 .##.....##..##.....##........##...##.....##...
-..#######..####....########.##.....##....##...\n`;
-
+..#######..####....########.##.....##....##...`;
         console.log(chalk.redBright(logo));
+        console.log(`v: ${version.version}\n`);
     }
 
     public static Main(msg: string)
