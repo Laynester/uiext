@@ -6,18 +6,15 @@ export class Functions
     {
         let song = string.split(":")
 
-        console.log('here 1')
-
         if (song.length < 0 || song.length > 8) return false;
-
-        console.log('here 2')
 
         let safe: boolean = false;
 
         song.forEach((row) =>
         {
             let set = row.split(";");
-            if (parseInt(set[0], 10))
+            
+            if (set[0].includes(","))
             {
                 set.forEach((col) =>
                 {
