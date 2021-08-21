@@ -1,4 +1,6 @@
-# Trax Editor
+# UI Extensions
+Discord:
+https://discord.gg/Za4Bu6wkar
 
 ### Before installation:
 
