@@ -20,7 +20,7 @@ CREATE TABLE `uiext_trax_playlist` (
   `room_id` int DEFAULT '0',
   `song_id` int DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=649 DEFAULT CHARSET=utf8mb3;
 
 DROP TABLE IF EXISTS `le_trax_sets`;
 CREATE TABLE `le_trax_sets` (

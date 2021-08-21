@@ -6,21 +6,27 @@ export class Functions
     {
         let song = string.split(":")
 
-        if (song.length < 1 || song.length > 8) return false;
+        console.log('here 1')
+
+        if (song.length < 0 || song.length > 8) return false;
+
+        console.log('here 2')
 
         let safe: boolean = false;
 
         song.forEach((row) =>
         {
             let set = row.split(";");
-            if (parseInt(set[0], 10)) return;
-            set.forEach((col) =>
+            if (parseInt(set[0], 10))
             {
-                let column = col.split(',');
-                if (column.length !== 2) return safe = false;
-                if (column[0] == "0") return safe = false;
-                safe = true;
-            })
+                set.forEach((col) =>
+                {
+                    let column = col.split(',');
+                    if (column.length !== 2) return safe = false;
+                    if (column[0] == "0") return safe = false;
+                    safe = true;
+                })
+            }
         });
 
         return safe;

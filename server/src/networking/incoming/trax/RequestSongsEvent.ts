@@ -23,7 +23,7 @@ export class RequestSongsEvent implements IncomingMessage
             .where({ item_id: UIExt.getInstance().config.trax.item_id, user_id: ws.account.id })
             .getMany();
         
-        let discIds: number[] = [];
+        let discIds: number[] = [0];
         
         discs.forEach((item) =>
         {
