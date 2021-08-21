@@ -167,7 +167,6 @@ const functions = {
             })
 
             rowIndex++;
-            console.log('row')
         });
     },
     findCollection(sound)
@@ -228,7 +227,7 @@ const functions = {
         audio.play();
     },
     stopPlayingSound() {
-        this.playing.pause();
+        if(this.playing) this.playing.pause();
         this.playing = null;
     },
     registerSelected(sound, colour, setC, id) {

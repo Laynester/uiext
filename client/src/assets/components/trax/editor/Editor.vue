@@ -35,6 +35,9 @@ export default {
     mounted() {
         this.setTracks();
     },
+    unmounted() {
+        this.stopSong();
+    },
     methods: functions,
     beforeDestroy() {
         this.stopSong();
