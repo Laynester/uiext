@@ -1,20 +1,6 @@
 import store from "../utils/store";
-import { GameWindowEvent } from "./incoming/games/GameWindowEvent";
-import { RequestedConfigEvent } from "./incoming/general/RequestedConfigEvent";
-import { RequestedLangEvent } from "./incoming/general/RequestedLangEvent";
-import { IncomingMessage } from "./incoming/IncomingMessage";
-import { RequestedCollectionsEvent } from "./incoming/trax/RequestedCollectionsEvent";
-import { RequestedSongsEvent } from "./incoming/trax/RequestedSongsEvent";
-import { AlertEvent } from "./incoming/general/AlertEvent";
-import { TraxWindowEvent } from "./incoming/trax/TraxWindowEvent";
-import { ConnectionComposer } from "./outgoing/general/ConnectionComposer";
-import { RequestConfigComposer } from "./outgoing/general/RequestConfigComposer";
-import { RequestLangComposer } from "./outgoing/general/RequestLangComposer";
-import { OutgoingMessage } from "./outgoing/OutgoingMessage";
-import { GameInviteEvent } from "./incoming/games/GameInviteEvent";
-import { TicTacToeGameBoardEvent } from "./incoming/games/TicTacToe/TicTacToeGameBoardEvent";
-import { RequestedPlaylistEvent } from "./incoming/trax/RequestedPlaylistEvent";
-import { PlayingSongEvent } from "./incoming/trax/PlayingSongEvent";
+import { IncomingMessage, RequestedLangEvent, RequestedConfigEvent, AlertEvent, TraxWindowEvent, RequestedSongsEvent, RequestedCollectionsEvent, RequestedPlaylistEvent, PlayingSongEvent, GameWindowEvent, GameInviteEvent, TicTacToeGameBoardEvent } from "./incoming";
+import { ConnectionComposer, RequestLangComposer, RequestConfigComposer, OutgoingMessage } from "./outgoing";
 
 export class CommunicationManager
 {

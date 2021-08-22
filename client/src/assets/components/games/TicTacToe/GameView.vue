@@ -1,6 +1,6 @@
 <script>
 import { CommunicationManager } from "@/communication/CommunicationManager";
-import { TicTacToeGameMove } from "@/communication/outgoing/games/TicTacToe/TicTacToeGameMove";
+import { TicTacToeGameMove } from "@/communication/outgoing";
 export default {
     methods: {
         clickCell(row, column) {

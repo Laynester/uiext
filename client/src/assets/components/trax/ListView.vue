@@ -1,14 +1,15 @@
 <script>
 import { CommunicationManager } from "@/communication/CommunicationManager";
-import { RequestSongsComposer } from "@/communication/outgoing/trax/RequestSongsComposer";
-import { BurnSongComposer } from "@/communication/outgoing/trax/BurnSongComposer";
-import { DeleteSongComposer } from "@/communication/outgoing/trax/DeleteSongComposer";
 import { functions } from "@/utils/traxHandler";
-import { RequestCollectionsComposer } from "@/communication/outgoing/trax/RequestCollectionsComposer";
-import { RequestPlaylistComposer } from "@/communication/outgoing/trax/RequestPlaylistComposer";
-import { ModifyPlaylistComposer } from "@/communication/outgoing/trax/ModifyPlaylistComposer";
-import { TogglePlaylistComposer } from "@/communication/outgoing/trax/TogglePlaylistComposer";
-
+import {
+    TogglePlaylistComposer,
+    ModifyPlaylistComposer,
+    RequestCollectionsComposer,
+    RequestPlaylistComposer,
+    DeleteSongComposer,
+    BurnSongComposer,
+    RequestSongsComposer,
+} from "@/communication/outgoing";
 export default {
     data() {
         return {

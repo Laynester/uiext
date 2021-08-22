@@ -28,7 +28,8 @@ export default {
         bringToTop() {
             let elements = document.getElementsByClassName("uiExt-card");
             let maxZ = 1;
-            elements.forEach((element) => {
+            if (!elements.length) return;
+            for (let element of elements) {
                 let z = element.style.zIndex;
 
                 if (!z || z === undefined || z === null) {
@@ -38,7 +39,7 @@ export default {
                     element.style.zIndex = z;
                 }
                 if (parseInt(z) > maxZ) maxZ = parseInt(z);
-            });
+            }
 
             if (!maxZ) return;
 

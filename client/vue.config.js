@@ -11,12 +11,5 @@ module.exports = {
             ignoreOrder: true,
             filename: 'uiext/[name].css', 
           },
-    },
-    chainWebpack: config => {
-        config.plugin('html')
-          .tap(args => {
-            args[0].minify = false
-            return args
-          })
-      }
+    }
 }

@@ -1,7 +1,9 @@
 <script>
 import { CommunicationManager } from "@/communication/CommunicationManager";
-import { GameInviteComposer } from "@/communication/outgoing/games/GameInviteComposer";
-import { StartGameComposer } from "@/communication/outgoing/games/StartGameComposer";
+import {
+    GameInviteComposer,
+    StartGameComposer,
+} from "@/communication/outgoing";
 
 export default {
     data() {

@@ -1,5 +1,4 @@
 // @ts-nocheck
-import { Howl } from "howler";
 import { CommunicationManager } from "../communication/CommunicationManager";
 import { CreateSongComposer } from "../communication/outgoing/trax/CreateSongComposer";
 
@@ -74,22 +73,20 @@ const functions = {
 
         let trackerlength = this.tracker.sounds.length + 1;
 
-        let helper = new Howl({
-            src: [
-                UIExtConfig.sounds +
-                "sound_machine_sample_" +
-                file_names[0] +
-                ".mp3",
-            ],
-            onend: function () {
-                file_names.shift();
-                if (file_names.length > 0) {
-                    if (self.tuned) return self.playBank(file_names);
-                }
-            },
-        });
+        let help = new Audio(UIExtConfig.sounds +
+            "sound_machine_sample_" +
+            file_names[0] +
+            ".mp3");
+        
+        help.onended = () =>
+        {
+            file_names.shift();
+            if (file_names.length > 0) {
+                if (self.tuned) return self.playBank(file_names);
+            }
+        }
 
-        this.tracker.sounds[trackerlength] = helper
+        this.tracker.sounds[trackerlength] = help
         this.tracker.sounds[trackerlength].play();
     },
     setTracks() {
