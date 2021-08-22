@@ -3,9 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "serve": "vite",
+    "build": "vite build"
   },
   "dependencies": {
     "bootstrap": "^5.1.0",
@@ -13,13 +12,12 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
-    "@popperjs/core": "^2.9.3",
-    "@vue/cli-plugin-typescript": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
+    "@vitejs/plugin-vue": "^1.4.0",
     "@vue/compiler-sfc": "^3.0.0",
     "sass": "^1.37.5",
     "sass-loader": "^10.2.0",
-    "typescript": "~4.1.5"
+    "typescript": "~4.1.5",
+    "vite": "^2.5.0"
   },
   "browserslist": [
     "> 1%",

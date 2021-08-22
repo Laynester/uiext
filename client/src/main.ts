@@ -31,7 +31,7 @@ app.config.globalProperties.$store = Store
 
 app.mount('#uiext-app');
 
-const logo = `%c\n This hotel is using UI-Extensions (${version.version}) by Laynester 2021 - Join the discord server: https://discord.gg/Za4Bu6wkar \n`;
+const logo = `%c\n This hotel is using UI-Extensionss (${version.version}) by Laynester 2021 - Join the discord server: https://discord.gg/Za4Bu6wkar \n`;
 window.console.log.apply(console, [
     logo,
     'color: red; background: #000000; padding:3px 0;' ]);
