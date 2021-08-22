@@ -146,6 +146,7 @@ export default {
                 >
                     <UIExtButton
                         class="me-1"
+                        :class="{'isburneddisc':r.disc}"
                         :theme="$store.state.config.trax.buttons"
                         caption="<i class='fas fa-angle-double-left'></i>"
                         @clicked="removeFromPlaylist(r.id)"
@@ -187,7 +188,7 @@ export default {
                     />
                 </div>
             </UIExtBorder>
-            <div class="d-flex flex-row justify-content-between">
+            <div class="d-flex flex-row justify-content-between" v-if="!selected.disc">
                 <UIExtButton
                     :class="{'uiExt-button-disabled':!changed}"
                     :theme="$store.state.config.trax.buttons"

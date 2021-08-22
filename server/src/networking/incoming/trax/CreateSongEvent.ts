@@ -25,6 +25,8 @@ export class CreateSongEvent implements IncomingMessage
         {
             let soundtrack = await SoundTrackEntity.getRepository().createQueryBuilder("song").where({ id: editId }).getOne();
 
+            if (soundtrack.owner !== ws.account.id) return;
+
             if (soundtrack)
             {
                 soundtrack.track = track;
