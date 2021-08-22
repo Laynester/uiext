@@ -10,10 +10,10 @@
         "page_id": 1,
         "cost": "-1:100,5:20",
         "achievement_id": 2758,
-        "bubble_icon": "${image.library.url}/notifications"
+        "bubble_icon": "${image.library.url}notifications/failed.png"
     },
     "games": {
-        "icon": "${image.library.url}/notifications",
+        "icon": "${image.library.url}notifications/failed.png",
         "ttt":{
             "size":3,
             "max":3,

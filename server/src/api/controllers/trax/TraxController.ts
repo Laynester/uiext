@@ -18,7 +18,7 @@ export class TraxController
 
         if (!user) return res.json({});
 
-        if (!user.room) return;
+        if (!user.room) return res.json({});
 
         if (UIExt.getInstance().config.features.trax)
         {

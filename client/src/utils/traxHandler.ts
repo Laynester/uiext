@@ -64,29 +64,39 @@ const functions = {
                     }
                 })
 
-                if (arr.length) this.playBank(arr);
+                if (arr.length) this.playBank(arr, []);
             }
         });
     },
-    playBank(file_names) {
+    playBank(file_names, arr) {
         let self = this;
 
         let trackerlength = this.tracker.sounds.length + 1;
 
-        let help = new Audio(UIExtConfig.sounds +
-            "sound_machine_sample_" +
-            file_names[0] +
-            ".mp3");
+        if (!arr.length)
+        {
+            file_names.forEach((element,ind) =>
+            {
+                arr.push(new Audio(
+                    UIExtConfig.sounds + "sound_machine_sample_" + element + ".mp3"
+                    ));
+            });
+        }
+
+        let help = arr[0];
         
         help.onended = () =>
         {
             file_names.shift();
+            
+            arr.shift();
             if (file_names.length > 0) {
-                if (self.tuned) return self.playBank(file_names);
+                if (self.tuned) return self.playBank(file_names, arr);
             }
         }
 
-        this.tracker.sounds[trackerlength] = help
+        this.tracker.sounds[trackerlength] = help;
+
         this.tracker.sounds[trackerlength].play();
     },
     setTracks() {
@@ -203,16 +213,23 @@ const functions = {
             this.$store.state.trax.currentPage * 6
         );
     },
+    findSound(id)
+    {
+        if (typeof this.sounds['sound_machine_sample_' + id] === "undefined")
+        {
+            this.sounds['sound_machine_sample_' + id] = new Audio(
+            UIExtConfig.sounds + "sound_machine_sample_" + id + ".mp3"
+            );
+        }
+
+        return this.sounds['sound_machine_sample_' + id];
+    },
     playSound(id, single) {
         if (!id) return;
 
         if (this.tuned) return;
 
-        if (!this.sounds['sound_machine_sample_' + id]) { this.sounds['sound_machine_sample_' + id] = new Audio(
-            UIExtConfig.sounds + "sound_machine_sample_" + id + ".mp3"
-        ); }
-
-        const audio = this.sounds['sound_machine_sample_' + id];
+        const audio = this.findSound(id);
 
         if (single) {
             this.playing = audio;
