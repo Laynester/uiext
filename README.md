@@ -1,4 +1,5 @@
 # UI Extensions
+
 Discord:
 https://discord.gg/Za4Bu6wkar
 
@@ -25,7 +26,7 @@ paste the following into your cms client.php or nitro's index.html
 > paste `<div id="uiext-app"></div>` BELOW `<approot>` if you're pasting this into nitro's index.html
 
 ```
-<link href="/uiext/app.css" rel="stylesheet">
+<link href="/uiext/index.css" rel="stylesheet">
 <div id="uiext-app"></div>
 <script>
   var UIExtConfig = {
@@ -34,8 +35,7 @@ paste the following into your cms client.php or nitro's index.html
     sso: (new URLSearchParams(window.location.search).get('sso') || null)
   }
 </script>
-<script type="text/javascript" src="/uiext/chunk-vendors.js"></script>
-<script type="text/javascript" src="/uiext/app.js"></script>
+<script type="module" crossorigin src="/uiext/index.js"></script>
 ```
 
 > if you are not using nitro paste this too `<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">`
