@@ -22,7 +22,7 @@ export class TraxController
 
         if (UIExt.getInstance().config.features.trax)
         {
-            if (user.room.room.owner_id !== userId) return;
+            if (user.room.room.owner_id !== userId) return res.json({});
             
             UIExt.getInstance().sendToUser(user.account.id, new TraxWindowComposer(true,false));
         } else {
