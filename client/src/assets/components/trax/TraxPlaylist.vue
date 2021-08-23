@@ -10,14 +10,14 @@ export default {
     },
     mounted() {
         this.traxplayer = new TraxPlayer(
-            $store.state.trax.playingSong.track,
+            this.$store.state.trax.playingSong.track,
             this
         );
 
         this.traxplayer.play();
     },
     unmounted() {
-        this.traxplayer.play();
+        this.traxplayer.stop();
     },
 };
 </script>

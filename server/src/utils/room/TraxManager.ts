@@ -87,6 +87,7 @@ export class TraxManager
 
     private stopPlaylist(): void
     {
+        this._playingSong = 0;
         clearInterval(this._cycle);
         
         this._room.sendToPlayers(new PlayingSongComposer(null));
