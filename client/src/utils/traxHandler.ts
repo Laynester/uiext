@@ -1,103 +1,13 @@
 // @ts-nocheck
 import { CommunicationManager } from "../communication/CommunicationManager";
 import { CreateSongComposer } from "../communication/outgoing/trax/CreateSongComposer";
+import { TraxPlayer } from "@/utils/TraxPlayer";
+
 
 const functions = {
-    playSong(songString, length, preview) {
-        this.tuned = true;
-
-        const str = songString.split(':');
-
-        if (preview) {
-            this.tracker.visible = true;
-
-            // someone fix this plz
-            this.tracker.position = 0;
-            // plz
-
-            this.tracker.ticker = setInterval(() => {
-                this.tracker.position = parseInt(this.tracker.position);
-                if (this.tracker.position + 1 < length) {
-                    if (this.tracker.position * 26 > this.$refs.tracker.offsetWidth - (26 * 2)) {
-                        this.$refs.tracker.scrollTo({
-                            top: 0,
-                            left:
-                                this.$refs.tracker.scrollLeft + 26,
-                            behavior: "smooth",
-                        });
-                    }
-                    this.tracker.position += 1;
-                } else {
-                    this.stopTracking();
-                    this.playSong(songString, length, true);
-                }
-            }, 2000);
-        } else
-        {
-            this.tracker.timer = 0;
-            this.tracker.ticker = setInterval(() => {
-                if (this.tracker.timer < length) {
-                    this.tracker.timer++;
-                } else {
-                    this.stopTracking();
-                    this.playSong(songString, length, false);
-                }
-            }, 1000);
-        }
-
-        str.forEach(eOne => {
-            const list = eOne.split(';');
-
-            const arr = [];
-
-            if (list.length >= 1) {
-                let position = parseInt(this.tracker.position);
-
-                list.forEach(eTwo => {
-                    const split = eTwo.split(',');
-                    if (!position) {
-                        if (split.length !== 2) return;
-                        if (arr.length < length) arr.push(split[0])
-                    } else {
-                        arr.push(0)
-                        position -= 1;
-                    }
-                })
-
-                if (arr.length) this.playBank(arr, []);
-            }
-        });
-    },
-    playBank(file_names, arr) {
-        let self = this;
-
-        let trackerlength = this.tracker.sounds.length + 1;
-
-        if (!arr.length)
-        {
-            file_names.forEach((element,ind) =>
-            {
-                arr.push(new Audio(
-                    UIExtConfig.sounds + "sound_machine_sample_" + element + ".mp3"
-                    ));
-            });
-        }
-
-        let help = arr[0];
-        
-        help.onended = () =>
-        {
-            file_names.shift();
-            
-            arr.shift();
-            if (file_names.length > 0) {
-                if (self.tuned) return self.playBank(file_names, arr);
-            }
-        }
-
-        this.tracker.sounds[trackerlength] = help;
-
-        this.tracker.sounds[trackerlength].play();
+    playSong(songString, length, preview)
+    {
+        this.$emit('play',songString)
     },
     setTracks() {
         this.$store.state.trax.tracks = [];
@@ -109,8 +19,7 @@ const functions = {
             this.$store.state.trax.tracks.push(ar);
         }
         this.$forceUpdate();
-        this.stopTracking();
-        this.stopSong();
+        this.$emit('stop')
         if (this.$store.state.trax.editing) this.setEditingTrack();
     },
     setEditingTrack()
@@ -326,15 +235,6 @@ const functions = {
             );
         }
     },
-    stopTracking() {
-        clearInterval(this.tracker.ticker);
-        this.tracker.visible = false;
-        this.tuned = false;
-        this.tracker.position = 0;
-        if(this.$refs.tracker) this.$refs.tracker.scrollLeft = 0;
-        this.tracker.timer = 0;
-        this.tracker.sounds = []
-    },
     getSongString() {
         let str = "";
         let songLength = 0;
@@ -373,12 +273,7 @@ const functions = {
         return { string: str, len: songLength };
     },
     stopSong() {
-        this.tuned = false;
-        if (this.tracker.sounds) this.tracker.sounds.forEach(e => {
-            e.pause();
-        })
-        this.tracker.sounds = [];
-        this.stopTracking();
+        this.$emit('stop')
     },
     saveSong: async function () {
         if (!this.getSongString().len) return

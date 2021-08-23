@@ -1,27 +1,23 @@
 <script>
-import { functions } from "@/utils/traxHandler";
+import { TraxPlayer } from "@/utils/TraxPlayer";
+
 export default {
     data() {
         return {
-            tracker: {
-                timer: 0,
-                ticker: null,
-                sounds: [],
-            },
+            tuned: false,
+            traxplayer: null,
         };
     },
     mounted() {
-        this.playSong(
-            this.$store.state.trax.playingSong.track,
-            this.$store.state.trax.playingSong.length,
-            false
+        this.traxplayer = new TraxPlayer(
+            $store.state.trax.playingSong.track,
+            this
         );
+
+        this.traxplayer.play();
     },
     unmounted() {
-        this.stopSong();
-    },
-    methods: {
-        ...functions,
+        this.traxplayer.play();
     },
 };
 </script>

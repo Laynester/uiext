@@ -2,9 +2,19 @@
 import Alert from "../ui/Alert.vue";
 import Editor from "./editor/Editor.vue";
 import ListView from "./ListView.vue";
+import { TraxPlayer } from "@/utils/TraxPlayer";
 
 export default {
     components: { ListView, Editor, Alert },
+    data() {
+        return {
+            tuned: false,
+            traxplayer: null,
+        };
+    },
+    mounted() {
+        this.traxplayer = new TraxPlayer("", this);
+    },
     methods: {
         toggleEditor() {
             this.$store.state.trax.editor = !this.$store.state.trax.editor;
@@ -14,6 +24,19 @@ export default {
         },
         toggle() {
             this.$store.state.window.trax = false;
+        },
+        preload(song) {
+            if (!this.traxplayer) return;
+            this.traxplayer.preload(song);
+        },
+        playSong(song) {
+            if (!this.traxplayer) return;
+            this.traxplayer.preload(song);
+            this.traxplayer.play();
+        },
+        stopSong() {
+            if (!this.traxplayer) return;
+            this.traxplayer.stop();
         },
     },
 };
@@ -29,8 +52,24 @@ export default {
         center="true"
         ref="card"
     >
-        <ListView v-if="!this.$store.state.trax.editor" @toggleEditor="toggleEditor()" />
-        <Editor v-else @toggleEditor="toggleEditor()" />
+        <ListView
+            v-if="!this.$store.state.trax.editor"
+            @toggleEditor="toggleEditor()"
+            :tuned="tuned"
+            :timeInSeconds="traxplayer ? traxplayer._timeInSeconds : 0"
+            @preload="preload"
+            @play="playSong"
+            @stop="stopSong"
+        />
+        <Editor
+            v-else
+            @toggleEditor="toggleEditor()"
+            :tuned="tuned"
+            :timeInSeconds="traxplayer ? traxplayer._timeInSeconds : 0"
+            @preload="preload"
+            @play="playSong"
+            @stop="stopSong"
+        />
         <Alert
             :theme="$store.state.config.trax.theme"
             :alert="$store.state.trax.alert"

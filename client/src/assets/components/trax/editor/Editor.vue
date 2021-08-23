@@ -2,6 +2,7 @@
 import { functions } from "@/utils/traxHandler";
 import Collections from "./Collections.vue";
 export default {
+    props: ["tuned", "timeInSeconds"],
     components: { Collections },
     data() {
         return {
@@ -16,18 +17,10 @@ export default {
                 grouped: false,
                 unique: true,
             },
-            tuned: false,
             name: "",
             hovered: {
                 i: 0,
                 ind: 0,
-            },
-            tracker: {
-                visible: false,
-                ticker: null,
-                position: 0,
-                offset: 0,
-                sounds: [],
             },
             sounds: [],
         };
@@ -36,7 +29,7 @@ export default {
         this.setTracks();
     },
     unmounted() {
-        this.stopSong();
+        this.$emit("stop");
     },
     methods: functions,
     beforeDestroy() {
@@ -63,9 +56,7 @@ export default {
                     :theme="$store.state.config.trax.buttons"
                     colour="success"
                     @clicked="playSong(
-                            getSongString().string,
-                            getSongString().len,
-                            true
+                            getSongString().string
                         )"
                     caption="<i class='fas fa-play' />"
                     class="px-2 me-1"
@@ -137,9 +128,9 @@ export default {
                     type="range"
                     min="0"
                     max="59"
-                    v-model="tracker.position"
                     style="width: 1563px"
-                    :val="tracker.position"
+                    v-model="$store.state.trax.traxplayer.position"
+                    :val="$store.state.trax.traxplayer.position"
                 />
             </div>
         </div>

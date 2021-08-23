@@ -22,7 +22,10 @@ export default createStore({
                 songs: null,
                 playing: false,
             },
-            playingSong: null
+            playingSong: null,
+            traxplayer: {
+                position: 0
+            }
         },
         games: {
             ttt: {

@@ -1,6 +1,5 @@
 <script>
 import { CommunicationManager } from "@/communication/CommunicationManager";
-import { functions } from "@/utils/traxHandler";
 import {
     TogglePlaylistComposer,
     ModifyPlaylistComposer,
@@ -11,6 +10,7 @@ import {
     RequestSongsComposer,
 } from "@/communication/outgoing";
 export default {
+    props: ["tuned", "timeInSeconds"],
     data() {
         return {
             songs: null,
@@ -18,12 +18,6 @@ export default {
             selected: {
                 name: "The Habhop",
                 length: "817",
-            },
-            tuned: false,
-            tracker: {
-                timer: 0,
-                ticker: null,
-                sounds: [],
             },
         };
     },
@@ -40,10 +34,9 @@ export default {
         this.$store.state.trax.editing = null;
     },
     unmounted() {
-        this.stopSong();
+        this.$emit("stop");
     },
     methods: {
-        ...functions,
         create() {
             this.$emit("toggleEditor");
         },
@@ -70,8 +63,8 @@ export default {
             this.changed = false;
         },
         preview() {
-            this.playSong(this.selected.track, this.selected.length * 2, false);
-            this.previewing = true;
+            if (this.tuned) this.$emit("stop");
+            else this.$emit("play", this.selected.track);
         },
         addToPlaylist(id) {
             CommunicationManager.getInstance().sendMessage(
@@ -87,6 +80,11 @@ export default {
             CommunicationManager.getInstance().sendMessage(
                 new TogglePlaylistComposer()
             );
+        },
+        selectSong(select) {
+            this.selected = select;
+            this.changed = true;
+            this.$emit("preload", select.track);
         },
     },
 };
@@ -109,9 +107,7 @@ export default {
                         :class="{'isburneddisc':r.disc}"
                         :theme="$store.state.config.trax.lists"
                         :caption="r.name"
-                        @clicked="
-                        selected = r;
-                        changed = true;"
+                        @clicked="selectSong(r)"
                     />
                     <UIExtButton
                         :theme="$store.state.config.trax.buttons"
@@ -157,7 +153,7 @@ export default {
                         class="w-100 text-truncate"
                         :theme="$store.state.config.trax.lists"
                         :caption="r.song.name"
-                        @clicked="selected = r.song; changed = true;"
+                        @clicked="selectSong(r.song)"
                     />
                 </div>
             </div>
@@ -168,7 +164,7 @@ export default {
                 ref="tracker"
             >
                 <b class="d-block">{{ selected.name }}</b>
-                {{ $filters.secondsDuration(tuned ? tracker.timer : selected.length) }}
+                {{ $filters.secondsDuration(tuned ? timeInSeconds : selected.length) }}
                 <div class="d-flex flex-row">
                     <UIExtButton
                         :theme="$store.state.config.trax.buttons"
@@ -182,7 +178,7 @@ export default {
                     <UIExtButton
                         :theme="$store.state.config.trax.buttons"
                         :caption="$filters.translate('trax.window.stop')"
-                        @clicked="stopSong()"
+                        @clicked="preview()"
                         colour="danger"
                         class="w-100"
                         v-else

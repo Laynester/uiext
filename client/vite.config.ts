@@ -10,6 +10,9 @@ export default defineConfig({
             '~': path.resolve(__dirname, 'nod_modules')
         }
     },
+    server: {
+        port: 3002
+    },
     build: {
         rollupOptions: {
             output: {
