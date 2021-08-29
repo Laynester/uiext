@@ -1,3 +1,5 @@
+import { VolumeEvent } from "../communication/incoming/general/VolumeEvent";
+import { Services } from "../services/Services";
 import store from "./store";
 
 export class TraxPlayer
@@ -22,12 +24,33 @@ export class TraxPlayer
 
     private timeOffset: number = 0;
 
+    private _volume: number;
+
     constructor(string: string, vue)
     {
+        this._volume = store.state.trax.volume;
         this._vue = vue;
         this.samples = [];
         this.resetTracks();
-        this.preload(string)
+        this.preload(string);
+        Services.getInstance().communication.addListener("volume", this.setVolume.bind(this));
+    }
+
+    public setVolume(data: VolumeEvent)
+    {
+        this._volume = data.volume;
+
+        this._tracks.forEach((e) =>
+        {
+            e.player.volume = this._volume / 100
+        });
+        this.samples.forEach(row =>
+        {
+            row.forEach((sample) =>
+            {
+                sample.sample.audioObj.volume = this._volume / 100
+            })
+        });
     }
 
     private resetTracks()
@@ -212,60 +235,7 @@ export class TraxPlayer
             if (this._tracks[track].sample != 0)
             {
                 this._tracks[track].player.currentTime = this.timeOffset;
-                //this._tracks[track].player.volume = this.volume;
-                this._tracks[track].player.play();
-                
-            }
-        }
-        return;
-
-        if (typeof this.samples[track] !== "undefined" && this.samples[track][this._tracks[track].playlist[position]])
-        {
-            console.log(this._tracks[track].playlist[position - store.state.trax.traxplayer.position], position - store.state.trax.traxplayer.position)
-            if (this.timeOffset && typeof this._tracks[track].playlist[position - store.state.trax.traxplayer.position] !== "undefined")
-            {
-                let tempPos = position - store.state.trax.traxplayer.position;
-                console.log(this._tracks[track].playlist[tempPos], tempPos)
-                this._tracks[track].player = this.samples[track][this._tracks[track].playlist[tempPos]].sample.audioObj;
-                this._tracks[track].timeLeft = this.samples[track][this._tracks[track].playlist[tempPos]].sample.sampleLength;
-                this._tracks[track].blocks = this._tracks[track].playlist[tempPos].blocks;
-                this._tracks[track].sample = this._tracks[track].playlist[tempPos].sample;  
-            } else
-            {
-                this._tracks[track].player = this.samples[track][this._tracks[track].playlist[position]].sample.audioObj;
-                this._tracks[track].timeLeft = this.samples[track][this._tracks[track].playlist[position]].sample.sampleLength;
-                this._tracks[track].blocks = this._tracks[track].playlist[position].blocks;
-                this._tracks[track].sample = this._tracks[track].playlist[position].sample; 
-            }
-
-            if (this._tracks[track].sample != 0)
-            {
-                this._tracks[track].player.currentTime = this.timeOffset;
-                //this._tracks[track].player.volume = this.volume;
-                this._tracks[track].player.play();
-                
-            }
-        }
-        return;
-        if (this.samples[this._tracks[track].playlist[position]])
-        {
-            if (this.timeOffset && typeof this.samples[this._tracks[track].playlist[position - 1]] !== "undefined")
-            {
-                this._tracks[track].player = this.samples[this._tracks[track].playlist[position - 1]].audioObj;
-                this._tracks[track].timeLeft = this.samples[this._tracks[track].playlist[position - 1]].sampleLength;
-                this._tracks[track].blocks = this._tracks[track].playlist[position - 1].blocks;
-                this._tracks[track].sample = this._tracks[track].playlist[position - 1];
-            } else
-            {
-                this._tracks[track].player = this.samples[this._tracks[track].playlist[position]].audioObj;
-                this._tracks[track].timeLeft = this.samples[this._tracks[track].playlist[position]].sampleLength;
-                this._tracks[track].blocks = this._tracks[track].playlist[position].blocks;
-                this._tracks[track].sample = this._tracks[track].playlist[position]; 
-            }
-            if (this._tracks[track].sample != 0)
-            {
-                this._tracks[track].player.currentTime = this.timeOffset;
-               //this._tracks[track].player.volume = this.volume;
+                this._tracks[track].player.volume = this._volume / 100
                 this._tracks[track].player.play();
                 
             }

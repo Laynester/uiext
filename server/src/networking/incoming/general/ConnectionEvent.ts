@@ -1,7 +1,9 @@
 import { UserEntity } from '../../../database/entities/UserEntity';
+import { UserSettingsEntity } from '../../../database/entities/UserSettingsEntity';
 import { Lang } from '../../../lang/Lang';
 import Logger from '../../../utils/Logger';
 import { WsUser } from '../../../utils/WsUser';
+import { VolumeComposer } from '../../outgoing/general/VolumeComposer';
 import { IncomingMessage } from '../IncomingMessage';
 
 export class ConnectionEvent implements IncomingMessage
@@ -15,7 +17,13 @@ export class ConnectionEvent implements IncomingMessage
         if (!user) return ws.wsu.close();
 
         ws.account = user;
+
+        let settings: UserSettingsEntity = await UserSettingsEntity.createQueryBuilder("user").where({ user_id: user.id }).getOne();
+
+        ws.settings = settings;
+
+        ws.sendMessage(new VolumeComposer(settings.volume_trax));
         
-        Logger.User(Lang("system.connected").replace("%username%",ws.account.username))
+        Logger.User(Lang("system.connected").replace("%username%", ws.account.username));
     }
 }

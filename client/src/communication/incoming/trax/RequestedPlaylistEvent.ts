@@ -3,8 +3,15 @@ import { IncomingMessage } from '../IncomingMessage';
 
 export class RequestedPlaylistEvent implements IncomingMessage
 {
-    parse(data: any): void
+    private _playlist: any;
+
+    public parse(data: any): void
     {
-        store.state.trax.playlist = data;
+        this._playlist = data;
+    }
+
+    public get playlist(): any
+    {
+        return this._playlist
     }
 }

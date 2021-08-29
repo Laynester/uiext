@@ -1,20 +1,30 @@
-import store from '../../../utils/store';
 import { IncomingMessage } from '../IncomingMessage';
 
 export class AlertEvent implements IncomingMessage
 {
-    parse(data: any): void
-    {
-        if (!data.window) return;
+    private _window: string;
+    private _message: string;
+    private _type: Number;
 
-        switch (data.window)
-        {
-            case "trax":
-                store.state.trax.alert = data;
-                break;
-            case "game.ttt":
-                store.state.games.ttt.alert = data;
-                break;
-        }
+    public parse(data: {window: string, message: string, type: Number}): void
+    {
+        this._window = data.window;
+        this._message = data.message;
+        this._type = data.type;
+    }
+
+    public get window(): string
+    {
+        return this._window;
+    }
+
+    public get message(): string
+    {
+        return this._message;
+    }
+
+    public get type(): Number
+    {
+        return this._type;
     }
 }

@@ -4,6 +4,7 @@ import { TestController } from './controllers/TestController';
 import TraxRouter from './controllers/trax/TraxRouter';
 import GameRouter from './controllers/game/GameRouter';
 import RoomRouter from './controllers/room/RoomRouter';
+import UserRouter from './controllers/user/UserRouter';
 
 let router = Router();
 
@@ -23,5 +24,7 @@ router.use('/trax', TraxRouter);
 router.use('/game', GameRouter);
 
 router.use('/room', RoomRouter);
+
+router.use('/user', UserRouter);
 
 export default router;

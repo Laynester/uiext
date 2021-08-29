@@ -3,8 +3,15 @@ import { IncomingMessage } from '../IncomingMessage';
 
 export class PlayingSongEvent implements IncomingMessage
 {
-    parse(data: any): void
+    private _playing: any;
+
+    public parse(data: any): void
     {
-        store.state.trax.playingSong = data;
+        this._playing = data;
+    }
+
+    public get playing(): void
+    {
+        return this._playing;
     }
 }

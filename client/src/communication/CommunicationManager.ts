@@ -1,5 +1,7 @@
 import store from "../utils/store";
 import { IncomingMessage, RequestedLangEvent, RequestedConfigEvent, AlertEvent, TraxWindowEvent, RequestedSongsEvent, RequestedCollectionsEvent, RequestedPlaylistEvent, PlayingSongEvent, GameWindowEvent, GameInviteEvent, TicTacToeGameBoardEvent } from "./incoming";
+import { PingEvent } from "./incoming/general/PingEvent";
+import { VolumeEvent } from "./incoming/general/VolumeEvent";
 import { ConnectionComposer, RequestLangComposer, RequestConfigComposer, OutgoingMessage } from "./outgoing";
 
 export class CommunicationManager
@@ -7,6 +9,8 @@ export class CommunicationManager
     private static _instance: CommunicationManager;
 
     private _events: Map<String, IncomingMessage>;
+
+    private _listeners: Array<{event: string, listener:Function}>
 
     private _webSocket: WebSocket;
 
@@ -20,6 +24,7 @@ export class CommunicationManager
 
     constructor()
     {
+        CommunicationManager._instance = this;
         //  @ts-ignore
         if (!UIExtConfig) throw new Error('UIExtConfig is not defined!');
 
@@ -31,7 +36,8 @@ export class CommunicationManager
         this._webSocket.onopen = this.onOpen.bind(this);
         this._webSocket.onclose = this.onClose.bind(this);
         this._events = new Map<String, IncomingMessage>();
-        this.registerMessages();
+        this._listeners = [];
+        this.registerEvents()
     }
 
     public static getInstance(): CommunicationManager
@@ -41,11 +47,13 @@ export class CommunicationManager
         return CommunicationManager._instance;
     }
 
-    private registerMessages(): void
+    private registerEvents(): void
     {
+        this._events.set('ping', new PingEvent())
         this._events.set('language', new RequestedLangEvent());
         this._events.set("config", new RequestedConfigEvent());
-        this._events.set("alert", new AlertEvent())
+        this._events.set("alert", new AlertEvent());
+        this._events.set("volume", new VolumeEvent())
 
         // trax
         this._events.set('trax_window', new TraxWindowEvent());
@@ -62,22 +70,40 @@ export class CommunicationManager
         this._events.set("game_ttt_board", new TicTacToeGameBoardEvent())
     }
 
-    private onMessage(message: string | MessageEvent): void
+    private onMessage(message: MessageEvent): void
     {
-        let json: any;
+        let mes = JSON.parse(message.data);
 
-        if (typeof message === 'string' || message instanceof String)
+        console.log(mes)
+
+        if (typeof mes.header == "undefined") return;
+
+        this.dispatchEvent(mes)
+    }
+
+    public addListener(event: string, listener: Function): void
+    {
+        this._listeners.push({event,listener});
+    }
+
+    public removeListener(event: string, listener: Function)
+    {
+        this._listeners = this._listeners.filter(e =>
         {
-            json = JSON.parse(message.replace(/&#47;/g, "/"));
-        } else
+            return e == {event,listener}
+        })
+    }
+
+    private dispatchEvent(mes: any): void
+    {
+        this._events.get(mes.header).parse(mes.data);
+        this._listeners.forEach(listener =>
         {
-            json = JSON.parse(message.data);
-        }
-
-        const parser = this._events.get(json.header);
-
-        if (parser) parser.parse(json.data);
-        else console.log(message.toString());
+            if (listener.event == mes.header)
+            {
+                listener.listener(this._events.get(mes.header));
+            }
+        })
     }
 
     private onOpen(): void
@@ -106,7 +132,7 @@ export class CommunicationManager
         }, 2000)
     }
 
-    private sendMessage(message: OutgoingMessage): void
+    public sendMessage(message: OutgoingMessage): void
     {
         if (!this.connected) this.onClose();
         else this._webSocket.send(JSON.stringify(message))

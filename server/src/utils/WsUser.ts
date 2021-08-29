@@ -1,5 +1,6 @@
 import * as WebSocket from 'ws';
 import { UserEntity } from '../database/entities/UserEntity';
+import { UserSettingsEntity } from '../database/entities/UserSettingsEntity';
 import { Games } from '../games/Games';
 import { Lang } from '../lang/Lang';
 import { UIExt } from '../main';
@@ -31,6 +32,8 @@ export class WsUser
     private _events: Map<String, IncomingMessage>;
     private _account: UserEntity;
     private _game: Games;
+
+    private _settings: UserSettingsEntity;
 
     private _status: StatusEnum = StatusEnum.FREE;
 
@@ -157,5 +160,15 @@ export class WsUser
     public set room(room: Room)
     {
         this._room = room;
+    }
+
+    public get settings(): UserSettingsEntity
+    {
+        return this._settings;
+    }
+
+    public set settings(settings)
+    {
+        this._settings = settings;
     }
 }

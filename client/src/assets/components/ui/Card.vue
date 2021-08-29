@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 export default {
     props: {
         theme: String,
@@ -26,17 +26,22 @@ export default {
     },
     methods: {
         bringToTop() {
-            let elements = document.getElementsByClassName("uiExt-card");
+            let elements: HTMLCollectionOf<Element> =
+                document.getElementsByClassName("uiExt-card");
+
             let maxZ = 1;
+
             if (!elements.length) return;
+
             for (let element of elements) {
-                let z = element.style.zIndex;
+                let ele = element as HTMLElement;
+                let z = ele.style.zIndex;
 
                 if (!z || z === undefined || z === null) {
                     z = document.defaultView
                         .getComputedStyle(element, null)
                         .getPropertyValue("z-index");
-                    element.style.zIndex = z;
+                    ele.style.zIndex = z;
                 }
                 if (parseInt(z) > maxZ) maxZ = parseInt(z);
             }

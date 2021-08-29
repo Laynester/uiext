@@ -1,10 +1,16 @@
-import store from '../../../utils/store';
 import { IncomingMessage } from '../IncomingMessage';
 
 export class RequestedLangEvent implements IncomingMessage
 {
-    parse(data: any): void
+    private _lang: any;
+
+    public parse(data: any): void
     {
-        store.state.lang = data;
+        this._lang = data;
+    }
+
+    public get lang(): any
+    {
+        return this._lang;
     }
 }

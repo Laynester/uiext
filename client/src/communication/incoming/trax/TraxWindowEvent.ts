@@ -3,9 +3,22 @@ import { IncomingMessage } from '../IncomingMessage';
 
 export class TraxWindowEvent implements IncomingMessage
 {
-    parse(data: any): void
+    private _status: boolean;
+    private _editor: boolean;
+
+    public parse(data: {status: boolean, editor: boolean}): void
     {
-        store.state.window.trax = data.status;
-        store.state.trax.editor = data.editor;
+        this._status = data.status;
+        this._editor = data.editor;
+    }
+
+    public get status(): boolean
+    {
+        return this._status;
+    }
+
+    public get editor(): boolean
+    {
+        return this._editor;
     }
 }

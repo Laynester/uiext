@@ -1,13 +1,13 @@
-<script>
-import { CommunicationManager } from "@/communication/CommunicationManager";
+<script lang="ts">
 import TraxEditor from "./assets/components/trax/TraxEditor.vue";
 import Games from "./assets/components/games/Games.vue";
 import TraxPlaylist from "./assets/components/trax/TraxPlaylist.vue";
+import { Services } from "@/services/Services";
 
 export default {
     components: { TraxEditor, Games, TraxPlaylist },
     mounted() {
-        CommunicationManager.getInstance();
+        Services.getInstance();
     },
 };
 </script>

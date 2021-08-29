@@ -1,10 +1,16 @@
-import store from '../../../utils/store';
 import { IncomingMessage } from '../IncomingMessage';
 
 export class RequestedConfigEvent implements IncomingMessage
 {
-    parse(data: any): void
+    private _config: any;
+
+    public parse(data: any): void
     {
-        store.state.config = data;
+        this._config = data;
+    }
+
+    public get config(): void
+    {
+        return this._config;
     }
 }

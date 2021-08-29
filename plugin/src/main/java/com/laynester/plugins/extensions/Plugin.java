@@ -6,6 +6,7 @@ import com.eu.habbo.plugin.EventListener;
 import com.eu.habbo.plugin.HabboPlugin;
 import com.laynester.plugins.extensions.events.EmulatorEvents;
 import com.laynester.plugins.extensions.events.RoomEvents;
+import com.laynester.plugins.extensions.events.UserEvents;
 import org.slf4j.LoggerFactory;
 
 
@@ -29,6 +30,7 @@ public class Plugin extends HabboPlugin implements EventListener {
         Logger("Has started");
         Emulator.getPluginManager().registerEvents(this, new EmulatorEvents());
         Emulator.getPluginManager().registerEvents(this, new RoomEvents());
+        Emulator.getPluginManager().registerEvents(this, new UserEvents());
     }
 
     public void onDisable() throws Exception {
