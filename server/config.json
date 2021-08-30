@@ -21,10 +21,23 @@
             "prize": "-1:1,5:10"
         }
     },
+    "nux": {
+        "room_name": "%username%'s room",
+        "room_desc": "%username% has entered the hotel!",
+        "rooms": [
+            {
+                "image": "/c_images/nuxrooms/room_1.png",
+                "room_id": 1,
+                "name": "change this",
+                "desc": "change this"
+            }
+        ]
+    },
     "features":{
         "disabledAlert": true,
         "trax": true,
-        "games-ttt": true
+        "games-ttt": true,
+        "nuxRooms": true
     },
     "debug": {
         "trax": true,
@@ -42,6 +55,11 @@
                 "theme": "0",
                 "lists": "2",
                 "buttons": "1"
+            }
+        },
+        "nux": {
+            "rooms": {
+                "theme": "0"
             }
         }
     }

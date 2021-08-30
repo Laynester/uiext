@@ -37,6 +37,11 @@ export default createStore({
                 turn: null,
                 me: null
             }
+        },
+        user: {
+            nux: {
+                rooms: null
+            }
         }
     },
 });

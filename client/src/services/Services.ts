@@ -2,6 +2,7 @@ import { TraxService } from "./TraxService";
 import { CommunicationManager } from "@/communication/CommunicationManager";
 import { AppService } from "./AppService";
 import { GameService } from "./GameService";
+import { UserService } from "./UserService";
 
 export class Services
 {
@@ -15,6 +16,8 @@ export class Services
 
     private _games: GameService;
 
+    private _user: UserService;
+
     constructor()
     {
         Services._instance = this;
@@ -22,6 +25,7 @@ export class Services
         this._app = AppService.getInstance();
         this._trax = TraxService.getInstance();
         this._games = GameService.getInstance();
+        this._user = UserService.getInstance();
     }
 
     public static getInstance(): Services
@@ -44,5 +48,10 @@ export class Services
     public get game(): GameService
     {
         return this._games;
+    }
+
+    public get user(): UserService
+    {
+        return this._user;
     }
 }

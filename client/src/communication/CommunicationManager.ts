@@ -2,6 +2,7 @@ import store from "../utils/store";
 import { IncomingMessage, RequestedLangEvent, RequestedConfigEvent, AlertEvent, TraxWindowEvent, RequestedSongsEvent, RequestedCollectionsEvent, RequestedPlaylistEvent, PlayingSongEvent, GameWindowEvent, GameInviteEvent, TicTacToeGameBoardEvent } from "./incoming";
 import { PingEvent } from "./incoming/general/PingEvent";
 import { VolumeEvent } from "./incoming/general/VolumeEvent";
+import { NuxRoomsEvent } from "./incoming/user/nux/NuxRoomsEvent";
 import { ConnectionComposer, RequestLangComposer, RequestConfigComposer, OutgoingMessage } from "./outgoing";
 
 export class CommunicationManager
@@ -68,6 +69,9 @@ export class CommunicationManager
 
         // ttt
         this._events.set("game_ttt_board", new TicTacToeGameBoardEvent())
+
+        // nux
+        this._events.set("nux_rooms", new NuxRoomsEvent());
     }
 
     private onMessage(message: MessageEvent): void
