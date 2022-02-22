@@ -18,12 +18,15 @@ export class ConnectionEvent implements IncomingMessage
 
         ws.account = user;
 
+        Logger.User(Lang("system.connected").replace("%username%", ws.account.username));
+
         let settings: UserSettingsEntity = await UserSettingsEntity.createQueryBuilder("user").where({ user_id: user.id }).getOne();
+
+        if (!settings) settings.volume_trax = 100;
 
         ws.settings = settings;
 
         ws.sendMessage(new VolumeComposer(settings.volume_trax));
-        
-        Logger.User(Lang("system.connected").replace("%username%", ws.account.username));
+
     }
 }
