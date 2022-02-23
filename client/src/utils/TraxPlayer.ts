@@ -56,7 +56,8 @@ export class TraxPlayer
     private resetTracks()
     {
         var tracks = [];
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < 10; i++)
+        {
             tracks.push({
                 player: new Audio(),
                 timeLeft: 0,
@@ -65,9 +66,16 @@ export class TraxPlayer
                 playlist: []
             });
         }
-        
+
+        console.log(this._tracks)
+
+        if (this._tracks)
+        {
+            this._tracks.forEach(el => { el.player.remove(); el.player.srcObject = null; });
+        }
+
         this._tracks = tracks;
- 
+
     }
 
     private getSampleUrl(sampleId: number)
@@ -76,12 +84,13 @@ export class TraxPlayer
         return UIExtConfig.sounds + "sound_machine_sample_" + sampleId + ".mp3";
     }
 
-    private getUniqueSamples(tracks) {
+    private getUniqueSamples(tracks)
+    {
         var flags = [];
         var output = [];
 
 
-        tracks.forEach((track,r) =>
+        tracks.forEach((track, r) =>
         {
             flags[r] = [];
             const row = []
@@ -89,7 +98,7 @@ export class TraxPlayer
             {
                 if (flags[r][track[ind].piece])
                     continue;
-                
+
                 flags[r][track[ind].piece] = true;
                 row.push(track[ind]);
             }
@@ -119,10 +128,12 @@ export class TraxPlayer
         };
     }
 
-    private getTrack(sample: string) {
+    private getTrack(sample: string)
+    {
         var track = [];
 
-        sample.split(";").forEach(sample => {
+        sample.split(";").forEach(sample =>
+        {
             var samplePiece = sample.split(",")[0];
             var blocks = sample.split(",")[1];
             this._localLength += parseInt(sample.split(",")[1]);
@@ -174,7 +185,7 @@ export class TraxPlayer
         tracks.forEach((el, r) =>
         {
             const actualTrack = [];
-            
+
             el.forEach(ele =>
             {
                 const repeat = ele.blocks / this.samples[r][ele.piece].sample.sampleLength;
@@ -187,7 +198,7 @@ export class TraxPlayer
                     }
                 }
             });
-            
+
             this._tracks[r].playlist = actualTrack;
         })
 
@@ -195,7 +206,8 @@ export class TraxPlayer
         this.onReady();
     }
 
-    private calculatePlaytime() {
+    private calculatePlaytime()
+    {
         var longestTrack = this._tracks[0].playlist;
 
         this._tracks.forEach((e) =>
@@ -224,25 +236,26 @@ export class TraxPlayer
                 this._tracks[track].player = this.samples[track][this._tracks[track].playlist[tempPos]].sample.audioObj;
                 this._tracks[track].timeLeft = this.samples[track][this._tracks[track].playlist[tempPos]].sample.sampleLength;
                 this._tracks[track].blocks = this._tracks[track].playlist[tempPos].blocks;
-                this._tracks[track].sample = this._tracks[track].playlist[tempPos].sample;  
+                this._tracks[track].sample = this._tracks[track].playlist[tempPos].sample;
             } else
             {
                 this._tracks[track].player = this.samples[track][this._tracks[track].playlist[position]].sample.audioObj;
                 this._tracks[track].timeLeft = this.samples[track][this._tracks[track].playlist[position]].sample.sampleLength;
                 this._tracks[track].blocks = this._tracks[track].playlist[position].blocks;
-                this._tracks[track].sample = this._tracks[track].playlist[position].sample; 
+                this._tracks[track].sample = this._tracks[track].playlist[position].sample;
             }
             if (this._tracks[track].sample != 0)
             {
                 this._tracks[track].player.currentTime = this.timeOffset;
                 this._tracks[track].player.volume = this._volume / 100
                 this._tracks[track].player.play();
-                
+
             }
         }
     }
 
-    private play() {
+    private play()
+    {
         this._playing = true;
         // @ts-ignore
         store.state.trax.traxplayer.position = 0;
@@ -265,7 +278,8 @@ export class TraxPlayer
         this._vue.tuned = this._playing;
     }
 
-    private tick(move: boolean = true) {
+    private tick(move: boolean = true)
+    {
         if (this._playing)
         {
             this._tracks.forEach((e, i) =>
@@ -273,9 +287,14 @@ export class TraxPlayer
                 this.playNextBeat(i)
             });
             this.timeOffset = 0;
-            if(move) store.state.trax.traxplayer.position += 1;
+            if (move) store.state.trax.traxplayer.position += 1;
             this._localPos++;
         }
+
+    }
+
+    private clearElements()
+    {
 
     }
 
@@ -297,13 +316,17 @@ export class TraxPlayer
         store.state.trax.traxplayer.position = 0;
         this._tracks.forEach((e) =>
         {
-            e.player.pause()
+            e.player.pause();
+            e.player.remove();
+            e.player.srcObject = null;
         });
         this.samples.forEach(row =>
         {
             row.forEach((sample) =>
             {
                 sample.sample.audioObj.pause();
+                sample.sample.audioObj.remove();
+                sample.sample.audioObj.srcObject = null;
             })
         });
     }

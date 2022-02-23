@@ -22,7 +22,12 @@ export class ConnectionEvent implements IncomingMessage
 
         let settings: UserSettingsEntity = await UserSettingsEntity.createQueryBuilder("user").where({ user_id: user.id }).getOne();
 
-        if (!settings) settings.volume_trax = 100;
+        if (!settings)
+        {
+            settings = new UserSettingsEntity();
+            settings.user_id = user.id;
+            await settings.save();
+        }
 
         ws.settings = settings;
 

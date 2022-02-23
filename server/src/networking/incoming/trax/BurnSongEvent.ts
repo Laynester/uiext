@@ -30,7 +30,7 @@ export class BurnSongEvent implements IncomingMessage
 
         let currencyString: string = "";
 
-        UIExt.getInstance().config.trax.cost.split(",").forEach((cost:string) =>
+        UIExt.getInstance().config.trax.cost.split(",").forEach((cost: string) =>
         {
             let currency: string[] = cost.split(":");
 
@@ -43,7 +43,7 @@ export class BurnSongEvent implements IncomingMessage
                     if (ws.account.credits >= parseInt(currency[1]))
                     {
                         safe = true;
-                        RCON.giveCredits(ws.account.id, parseInt(currency[1]));
+                        RCON.giveCredits(ws.account.id, parseInt('-' + currency[1]));
                     } else
                     {
                         safe = false;
@@ -71,11 +71,11 @@ export class BurnSongEvent implements IncomingMessage
             }
         });
 
-        if (!safe) return ws.sendMessage(new AlertComposer(1, Lang("trax.not_enough") + currencyString,"trax"));
+        if (!safe) return ws.sendMessage(new AlertComposer(1, Lang("trax.not_enough") + currencyString, "trax"));
 
         RCON.giveItem(ws.account.id, song.item.id)
 
         Logger.Trax(`${ws.account.username} ${Lang("system.burned_song")}`);
-        ws.sendMessage(new AlertComposer(1, Lang("trax.burned_song") + currencyString,"trax"));
+        ws.sendMessage(new AlertComposer(1, Lang("trax.burned_song") + currencyString, "trax"));
     }
 }
